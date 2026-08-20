@@ -1,0 +1,15 @@
+# Internal / non-student
+spec/
+
+# Web
+web/node_modules/
+web/dist/
+web/.env
+web/.env.local
+web/.env.*.local
+
+# Move generated / local
+move/build/
+move/.coverage_map.mv
+move/.trace/
+move/Published.toml
