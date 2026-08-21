@@ -5,16 +5,19 @@ import MoltenMetal from './components/MoltenMetal';
 import ProfileCard from './components/ProfileCard';
 import SocialActions from './components/SocialActions';
 import { usePortfolio } from './hooks/usePortfolio';
+import { getActiveChainTheme } from './lib/chainTheme';
+
+const chainTheme = getActiveChainTheme();
 
 const CARD_WIDTH = 1020;
 const CARD_ASPECT = 1.56;
 const CARD_HEIGHT = CARD_WIDTH / CARD_ASPECT;
 const CARD_SIZE_SCALE = 0.97;
 const STAGE_GAP = 28;
+const STAGE_HORIZONTAL_PADDING = 12;
 const STACK_GAP = 20;
 const SOCIAL_ACTIONS_HEIGHT = 44;
-const STACK_HEIGHT = CARD_HEIGHT + STACK_GAP + SOCIAL_ACTIONS_HEIGHT;
-const STACK_ASPECT = CARD_WIDTH / STACK_HEIGHT;
+const FALLBACK_STACK_HEIGHT = CARD_HEIGHT + STACK_GAP + SOCIAL_ACTIONS_HEIGHT;
 
 type StageInsets = {
   top: number;
@@ -23,10 +26,12 @@ type StageInsets = {
 
 function useCardLayout(
   stageRef: RefObject<HTMLElement | null>,
+  stackRef: RefObject<HTMLElement | null>,
   headerRef: RefObject<HTMLElement | null>,
   footerRef: RefObject<HTMLElement | null>,
 ) {
   const [scale, setScale] = useState(1);
+  const [stackHeight, setStackHeight] = useState(FALLBACK_STACK_HEIGHT);
   const [stageInsets, setStageInsets] = useState<StageInsets>({ top: 56, bottom: 56 });
 
   useEffect(() => {
@@ -38,17 +43,23 @@ function useCardLayout(
       const stage = stageRef.current;
       if (!stage) return;
 
-      const stageWidth = stage.clientWidth;
-      const stageHeight = stage.clientHeight;
-      const maxWidth = Math.min(CARD_WIDTH, stageWidth * 0.89, stageHeight * STACK_ASPECT);
-      const fitScale = Math.min(1, maxWidth / CARD_WIDTH, stageHeight / STACK_HEIGHT, stageWidth / CARD_WIDTH);
+      const measuredStackHeight = stackRef.current?.offsetHeight ?? FALLBACK_STACK_HEIGHT;
+      setStackHeight(measuredStackHeight);
+
+      const availableWidth = stage.clientWidth - STAGE_HORIZONTAL_PADDING * 2;
+      const availableHeight = stage.clientHeight - STAGE_GAP * 2;
+      const fitScale = Math.min(
+        1,
+        availableWidth / CARD_WIDTH,
+        availableHeight / measuredStackHeight,
+      );
       const viewportScale = window.visualViewport?.scale ?? 1;
       setScale((fitScale / viewportScale) * CARD_SIZE_SCALE);
     };
 
     updateLayout();
 
-    const observed = [stageRef.current, headerRef.current, footerRef.current].filter(Boolean);
+    const observed = [stageRef.current, stackRef.current, headerRef.current, footerRef.current].filter(Boolean);
     const ro = new ResizeObserver(updateLayout);
     for (const node of observed) {
       if (node) ro.observe(node);
@@ -64,17 +75,18 @@ function useCardLayout(
       window.visualViewport?.removeEventListener('resize', updateLayout);
       window.visualViewport?.removeEventListener('scroll', updateLayout);
     };
-  }, [stageRef, headerRef, footerRef]);
+  }, [stageRef, stackRef, headerRef, footerRef]);
 
-  return { scale, stageInsets };
+  return { scale, stackHeight, stageInsets };
 }
 
 export default function App() {
   const portfolio = usePortfolio();
   const stageRef = useRef<HTMLElement>(null);
+  const stackRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const footerRef = useRef<HTMLElement>(null);
-  const { scale, stageInsets } = useCardLayout(stageRef, headerRef, footerRef);
+  const { scale, stackHeight, stageInsets } = useCardLayout(stageRef, stackRef, headerRef, footerRef);
 
   useEffect(() => {
     if (portfolio.status === 'success' && portfolio.data?.fields.builder_name) {
@@ -86,7 +98,11 @@ export default function App() {
 
   return (
     <div className="app-root">
-      <MoltenMetal />
+      <MoltenMetal
+        color1={chainTheme.molten.color1}
+        color2={chainTheme.molten.color2}
+        color3={chainTheme.molten.color3}
+      />
       <Header ref={headerRef} />
       <main
         className="card-stage"
@@ -98,15 +114,24 @@ export default function App() {
         }}
       >
         <div
-          className="card-stage__stack"
+          className="card-stage__scale-box"
           style={{
-            transform: `scale(${scale})`,
+            width: CARD_WIDTH * scale,
+            height: stackHeight * scale,
           }}
         >
-          <div className="card-scale">
-            <ProfileCard portfolio={portfolio} />
+          <div
+            ref={stackRef}
+            className="card-stage__stack"
+            style={{
+              transform: `scale(${scale})`,
+            }}
+          >
+            <div className="card-scale">
+              <ProfileCard portfolio={portfolio} />
+            </div>
+            <SocialActions />
           </div>
-          <SocialActions />
         </div>
       </main>
       <Footer ref={footerRef} />

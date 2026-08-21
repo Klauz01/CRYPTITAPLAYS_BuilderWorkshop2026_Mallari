@@ -1,7 +1,9 @@
 /* Ported from root style.css - card only */
 
 :root {
-  --blue: #42a5ff;
+  --chain-primary: #4da2ff;
+  --chain-primary-rgb: 77, 162, 255;
+  --blue: var(--chain-primary);
 
   --card: #131318;
   --card-2: #0e0e13;
@@ -708,12 +710,12 @@ opacity: 0.26;
 .sui-link-box:hover {
   transform: translateY(-2px);
 
-  border-color: rgba(66, 165, 255, 0.35);
+  border-color: rgba(var(--chain-primary-rgb), 0.35);
 
   background:
     radial-gradient(
       circle at 35% 25%,
-      rgba(66, 165, 255, 0.09),
+      rgba(var(--chain-primary-rgb), 0.09),
       transparent 55%
     ),
     rgba(8, 8, 12, 0.5);
@@ -724,6 +726,8 @@ opacity: 0.26;
 
   width: 32px;
   height: 32px;
+
+  color: var(--chain-primary);
 
   opacity: 0.88;
 
@@ -1026,7 +1030,7 @@ opacity: 0.26;
     filter:
       drop-shadow(
         0 0 2px
-        rgba(66, 165, 255, 0.15)
+        rgba(var(--chain-primary-rgb), 0.15)
       );
   }
 
@@ -1038,12 +1042,12 @@ opacity: 0.26;
     filter:
       drop-shadow(
         0 0 5px
-        rgba(66, 165, 255, 0.55)
+        rgba(var(--chain-primary-rgb), 0.55)
       )
 
       drop-shadow(
         0 0 12px
-        rgba(66, 165, 255, 0.25)
+        rgba(var(--chain-primary-rgb), 0.25)
       );
   }
 
@@ -1060,12 +1064,12 @@ opacity: 0.26;
 
       drop-shadow(
         0 0 18px
-        rgba(66, 165, 255, 0.45)
+        rgba(var(--chain-primary-rgb), 0.45)
       )
 
       drop-shadow(
         0 0 35px
-        rgba(66, 165, 255, 0.14)
+        rgba(var(--chain-primary-rgb), 0.14)
       );
   }
 
@@ -1077,7 +1081,7 @@ opacity: 0.26;
     filter:
       drop-shadow(
         0 0 4px
-        rgba(66, 165, 255, 0.35)
+        rgba(var(--chain-primary-rgb), 0.35)
       );
   }
 
@@ -1174,9 +1178,9 @@ opacity: 0.26;
     linear-gradient(
       to right,
       transparent,
-      rgba(66, 165, 255, 0.2),
+      rgba(var(--chain-primary-rgb), 0.2),
       rgba(255, 255, 255, 0.07),
-      rgba(66, 165, 255, 0.2),
+      rgba(var(--chain-primary-rgb), 0.2),
       transparent
     );
 }
@@ -1214,8 +1218,7 @@ opacity: 0.26;
 
   gap: 5px;
 
-  color:
-    rgba(255, 255, 255, 0.9);
+  color: var(--chain-primary);
 
   text-decoration: none;
 
@@ -1383,7 +1386,7 @@ opacity: 0.26;
     linear-gradient(
       to bottom,
       transparent,
-      rgba(66, 165, 255, 0.3),
+      rgba(var(--chain-primary-rgb), 0.3),
       transparent
     );
 }
@@ -1406,7 +1409,7 @@ opacity: 0.26;
     filter:
       drop-shadow(
         0 0 4px
-        rgba(66, 165, 255, 0.3)
+        rgba(var(--chain-primary-rgb), 0.3)
       );
   }
 
@@ -1434,7 +1437,7 @@ opacity: 0.26;
     filter:
       drop-shadow(
         0 0 2px
-        rgba(66, 165, 255, 0.18)
+        rgba(var(--chain-primary-rgb), 0.18)
       );
   }
 
@@ -1442,11 +1445,11 @@ opacity: 0.26;
     filter:
       drop-shadow(
         0 0 5px
-        rgba(66, 165, 255, 0.45)
+        rgba(var(--chain-primary-rgb), 0.45)
       )
       drop-shadow(
         0 0 12px
-        rgba(66, 165, 255, 0.22)
+        rgba(var(--chain-primary-rgb), 0.22)
       );
   }
 
@@ -1458,11 +1461,11 @@ opacity: 0.26;
       )
       drop-shadow(
         0 0 18px
-        rgba(66, 165, 255, 0.5)
+        rgba(var(--chain-primary-rgb), 0.5)
       )
       drop-shadow(
         0 0 32px
-        rgba(66, 165, 255, 0.2)
+        rgba(var(--chain-primary-rgb), 0.2)
       );
   }
 
@@ -1470,7 +1473,7 @@ opacity: 0.26;
     filter:
       drop-shadow(
         0 0 4px
-        rgba(66, 165, 255, 0.32)
+        rgba(var(--chain-primary-rgb), 0.32)
       );
   }
 }
