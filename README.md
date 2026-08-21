@@ -1,49 +1,49 @@
-# Cryptita Plays
+# Cryptita Plays — Builder Workshop
 
-**Smart Contract to Website: Build & Deploy**
+A workshop project that pairs a **Sui Move `BuilderCard` package** with a **read-only Vite/React site**. Participants publish and create their card via the **Sui CLI**, then configure a single object ID so the website can render on-chain profile data with `getObject`.
 
-A beginner workshop that takes you from a Sui Move package to a live React site that can read and create a portfolio object on **Sui Mainnet**.
+There is **no browser wallet**, **no create form**, and **no on-page transaction signing**. Writes happen in the terminal only.
 
-## Learn
+## What you build
 
-This repo has two projects:
+1. **Move package** (`move/`) — `builder_card` module with a `BuilderCard` struct (13 string fields) and `create_builder_card`.
+2. **Static website** (`web/`) — single-viewport homepage with MoltenMetal background, translucent header/footer, and a scaled ProfileCard that reads one object from Sui Mainnet.
 
-| Path | Purpose |
-| --- | --- |
-| `move/` | Move package with `portfolio::create_portfolio` |
-| `web/` | Vite + React + TypeScript frontend |
+## Prerequisites
 
-By the end of the workshop you will:
+- [Node.js LTS](https://nodejs.org/) (for the frontend)
+- [Sui CLI](https://docs.sui.io/guides/developer/getting-started/sui-install) with Move edition 2024 support
+- A funded Sui address on **Mainnet** for publish/create (workshop production path)
+- Optional: Testnet SUI for practice before Mainnet
 
-1. Build and test a Move package.
-2. Publish it to Sui Mainnet.
-3. Connect a browser wallet in the frontend.
-4. Create a portfolio object from the website.
-5. Verify the object and transaction in [Suiscan](https://suiscan.xyz/mainnet/home).
-6. Deploy the static frontend to Vercel.
+### Install Sui CLI
 
-> **Network:** the app defaults to Mainnet. Use Testnet only for local practice — do not mix Testnet package/object IDs into the production env.
+Follow the current official guide:
 
-## Build
+- https://docs.sui.io/guides/developer/getting-started/sui-install
 
-### Prerequisites
-
-- [Node.js LTS](https://nodejs.org/)
-- [Git](https://git-scm.com/)
-- [Sui CLI](https://docs.sui.io/guides/developer/getting-started/sui-install)
-- A Sui address with Mainnet gas ([faucet / funding docs](https://docs.sui.io/guides/developer/getting-started/get-coins))
-- A [GitHub](https://github.com/) account (for Vercel deploy)
-
-Confirm the CLI works:
+Verify:
 
 ```bash
 sui --version
-sui client active-address
 ```
 
-**Important:** the Sui CLI keystore and your browser wallet are different keys unless you import the same secret into both. Website transactions are paid by the **connected browser wallet**, not the CLI keystore.
+### Gas and address balance
 
-### 1. Move package
+After Sui v1.72, transferred SUI may sit in **address balance** instead of a coin object. If `sui client publish` or `sui client call` cannot find gas, follow the **current official Sui documentation** to fund your address or convert balance to a coin. This repo does not ship a helper script.
+
+## Repository layout
+
+```text
+move/                  Sui Move package (builder_card)
+web/                   Vite + React read-only frontend
+spec/                  Workshop specifications (read-only inputs)
+index.html, style.css  Card prototype references (do not delete)
+```
+
+## Move package
+
+### Build and test
 
 ```bash
 cd move
@@ -51,139 +51,151 @@ sui move build
 sui move test
 ```
 
-Publish to Mainnet when ready:
+### Publish on Mainnet
 
 ```bash
 sui client switch --env mainnet
-sui client publish
+sui client active-address   # must be funded
+cd move
+sui move build
+sui move test
+sui client publish --gas-budget 100000000
 ```
 
-Record the **PackageID** from the publish output.
+Record the **Package ID** from the publish output (for CLI `--package`).
 
-If you republish, delete any stale `move/Published.toml` first so the CLI does not reuse an old package record.
+### Create a BuilderCard
 
-If `sui client publish` cannot find a gas coin (common on newer CLI versions when SUI sits in address balance), follow the current official guidance — do not add a custom helper script:
+Use **thirteen string arguments** in this exact order:
 
-- [Sui CLI getting started](https://docs.sui.io/guides/developer/getting-started/sui-install)
-- [Get SUI tokens](https://docs.sui.io/guides/developer/getting-started/get-coins)
+1. `builder_name`
+2. `builder_no`
+3. `profession`
+4. `program`
+5. `country`
+6. `specialization`
+7. `building_since`
+8. `focus`
+9. `community`
+10. `skills` (comma-separated)
+11. `issued`
+12. `about` (stored on-chain, **not shown** on the website)
+13. `photo_url`
 
-### 2. Frontend
+#### Bash / macOS / Git Bash
+
+```bash
+sui client call \
+  --package 0xPACKAGE_ID \
+  --module builder_card \
+  --function create_builder_card \
+  --args \
+    "Alex Rivera" \
+    "BP-042" \
+    "Smart Contract Developer" \
+    "Cryptita Build & Deploy 2026" \
+    "Philippines" \
+    "DeFi Protocols" \
+    "2024" \
+    "Move on Sui" \
+    "Cryptita Plays" \
+    "Move, Sui, TypeScript, React" \
+    "August 2026" \
+    "Workshop participant learning Sui Move." \
+    "https://example.com/photos/alex.jpg" \
+  --gas-budget 10000000
+```
+
+#### PowerShell
+
+```powershell
+sui client call `
+  --package 0xPACKAGE_ID `
+  --module builder_card `
+  --function create_builder_card `
+  --args "Alex Rivera" "BP-042" "Smart Contract Developer" "Cryptita Build & Deploy 2026" "Philippines" "DeFi Protocols" "2024" "Move on Sui" "Cryptita Plays" "Move, Sui, TypeScript, React" "August 2026" "Workshop participant learning Sui Move." "https://example.com/photos/alex.jpg" `
+  --gas-budget 10000000
+```
+
+### Package ID vs Object ID
+
+| ID | When you get it | Used for |
+| --- | --- | --- |
+| **Package ID** | `sui client publish` | CLI `--package` when calling `create_builder_card` |
+| **Object ID** | `sui client call create_builder_card` | `VITE_PORTFOLIO_OBJECT_ID` in the frontend |
+
+The website reads the **created object**, not the package. Each `create_builder_card` call mints a **new owned object**.
+
+Verify on Suiscan:
+
+`https://suiscan.xyz/mainnet/object/0xYOUR_OBJECT_ID/fields`
+
+## Frontend
+
+### Environment variables
+
+Copy `web/.env.example` to `web/.env`:
+
+```env
+VITE_PORTFOLIO_OBJECT_ID=
+VITE_SUI_NETWORK=mainnet
+```
+
+| Variable | Purpose |
+| --- | --- |
+| `VITE_PORTFOLIO_OBJECT_ID` | Created **BuilderCard object ID** (may be empty before create) |
+| `VITE_SUI_NETWORK` | Display label for the NETWORK row (`mainnet` → `Sui Mainnet`) |
+
+Vite inlines `VITE_*` at **build time**. After changing `.env`, rebuild and redeploy.
+
+### Local commands
 
 ```bash
 cd web
 npm install
-```
-
-Copy `web/.env.example` to `web/.env.local` and fill in your IDs:
-
-```env
-VITE_SUI_NETWORK=mainnet
-VITE_PACKAGE_ID=0xYOUR_PACKAGE_ID
-VITE_PORTFOLIO_OBJECT_ID=0xYOUR_OBJECT_ID
-```
-
-Replace `public/profile.png` with your own photo (optional but recommended).
-
-Run locally:
-
-```bash
-cd web
-npm run dev
-```
-
-Then:
-
-1. Open the app and connect a Mainnet-funded browser wallet.
-2. Submit the create-portfolio form (seven fields: name, course, school, about, LinkedIn, GitHub, comma-separated skills).
-3. Copy the created **ObjectID** into `VITE_PORTFOLIO_OBJECT_ID` and reload.
-4. Confirm fields match on-chain via Suiscan:
-   - Object: `https://suiscan.xyz/mainnet/object/<OBJECT_ID>/fields`
-   - Transaction: `https://suiscan.xyz/mainnet/tx/<DIGEST>`
-
-Verify the frontend builds cleanly:
-
-```bash
-cd web
-npx tsc --noEmit
+npm run dev      # http://localhost:5173
 npm run build
+npm run preview
 ```
 
-### CLI backup (optional)
+An **empty** `VITE_PORTFOLIO_OBJECT_ID` is valid: the site builds and shows empty/placeholder card states without calling RPC.
 
-The website form is the primary way to create a portfolio. You can also call the function from the CLI:
+### After create
 
-**Bash / macOS / Linux**
+1. Set `VITE_PORTFOLIO_OBJECT_ID` to your created object ID.
+2. Set `VITE_SUI_NETWORK=mainnet` (or `Sui Mainnet`).
+3. `npm run build` in `web/`.
+4. `npm run preview` and confirm all card fields, ISSUED, OBJECT ID, OWNER, and NETWORK.
 
-```bash
-sui client call \
-  --function create_portfolio \
-  --module portfolio \
-  --package <PACKAGE_ID> \
-  --args \
-    "<name>" "<course>" "<school>" "<about>" \
-    "<linkedin>" "<github>" \
-    "<Skill 1,Skill 2,Skill 3>"
-```
+### Replacing the displayed card
 
-**PowerShell**
+Call `create_builder_card` again (new object), update `VITE_PORTFOLIO_OBJECT_ID`, rebuild, and redeploy. The previous object remains on-chain; only the configured ID changes what the site reads.
 
-```powershell
-sui client call `
-  --function create_portfolio `
-  --module portfolio `
-  --package <PACKAGE_ID> `
-  --args `
-    "<name>" "<course>" "<school>" "<about>" `
-    "<linkedin>" "<github>" `
-    "<Skill 1,Skill 2,Skill 3>"
-```
+## Deploy to Vercel
 
-PowerShell note: do not put a trailing space after a line-continuation backtick.
+Configure in the Vercel dashboard:
 
-Save the created **ObjectID** for `VITE_PORTFOLIO_OBJECT_ID`.
+| Setting | Value |
+| --- | --- |
+| Root directory | `web` |
+| Build command | `npm run build` |
+| Output directory | `dist` |
+| Environment variables | `VITE_PORTFOLIO_OBJECT_ID`, `VITE_SUI_NETWORK` |
 
-## Deploy
+Redeploy after any env change. No `vercel.json` is required unless your project defaults differ.
 
-### Vercel
+## Optional testnet practice
 
-1. Push this repo to GitHub.
-2. Import the project in [Vercel](https://vercel.com/).
-3. Set:
-   - **Root Directory:** `web`
-   - **Build Command:** `npm run build`
-4. Add the same `VITE_*` variables in the Vercel project settings **before** building (Vite inlines them at build time).
-5. Deploy and open the `*.vercel.app` URL.
+You may practice publish/create on Testnet first, but the shipped frontend reads **Sui Mainnet** via `getFullnodeUrl('mainnet')`. Testnet objects will not appear unless you change the read client (out of workshop scope).
 
-Do not put private keys in env vars. Only public package/object IDs and the network name belong there.
+## Specifications
 
-### Release checklist
+Detailed requirements live in `spec/`:
 
-These steps stay manual on purpose:
+- `spec/04-sui-and-smart-contract-spec.md` — Move schema and CLI
+- `spec/05-frontend-implementation-spec.md` — React architecture
+- `spec/07-testing-and-verification-spec.md` — manual verification checklist
 
-1. Publish the Move package to Mainnet.
-2. Record the **PackageID**.
-3. Connect a funded browser wallet on Mainnet (or use the CLI backup).
-4. Create the portfolio object.
-5. Record the **ObjectID**.
-6. Set `VITE_PACKAGE_ID` and `VITE_PORTFOLIO_OBJECT_ID` locally and in Vercel.
-7. Deploy the frontend and confirm the hosted site shows your on-chain data.
+## License
 
-## Project layout
-
-```text
-├── move/                 # Sui Move package
-│   ├── sources/          # portfolio module
-│   └── tests/            # Move tests
-├── web/                  # Vite + React frontend
-│   ├── public/           # static assets (profile.png)
-│   └── src/              # app, hooks, components
-└── README.md             # this guide
-```
-
-## Useful links
-
-- [Sui docs](https://docs.sui.io/)
-- [Install Sui CLI](https://docs.sui.io/guides/developer/getting-started/sui-install)
-- [Get coins / faucet](https://docs.sui.io/guides/developer/getting-started/get-coins)
-- [Suiscan Mainnet](https://suiscan.xyz/mainnet/home)
-- [Vercel](https://vercel.com/)
+Workshop educational use. Cryptita Plays branding and partner assets belong to their respective owners.

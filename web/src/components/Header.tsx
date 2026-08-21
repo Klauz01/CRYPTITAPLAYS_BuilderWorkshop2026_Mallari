@@ -1,13 +1,39 @@
-import { WalletBar } from './WalletBar'
+import { forwardRef } from 'react';
+import { siGithub } from '../lib/brandIcons';
+import BrandIcon from './BrandIcon';
 
-export function Header() {
+const GITHUB_REPO_URL =
+  'https://github.com/owenlim225/Cryptita-plays-builder-workshop';
+
+const Header = forwardRef<HTMLElement>(function Header(_props, ref) {
   return (
-    <header className="site-header">
-      <div>
-        <p className="eyebrow">Cryptita Plays</p>
-        <h2>Smart Contract to Website: Build &amp; Deploy</h2>
-      </div>
-      <WalletBar />
+    <header ref={ref} className="site-header">
+      <a
+        className="site-header__link"
+        href="https://www.facebook.com/cryptitaplays"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Cryptita Plays on Facebook"
+      >
+        <img
+          className="site-header__logo"
+          src="/assets/cryptita-long.svg"
+          alt="Cryptita Plays"
+        />
+      </a>
+
+      <a
+        className="site-header__github"
+        href={GITHUB_REPO_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="View workshop source on GitHub"
+      >
+        <BrandIcon icon={siGithub} size={18} decorative />
+        <span className="site-header__github-label">GitHub</span>
+      </a>
     </header>
-  )
-}
+  );
+});
+
+export default Header;

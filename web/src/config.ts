@@ -1,34 +1,20 @@
-const rawNetwork = (import.meta.env.VITE_SUI_NETWORK ?? 'mainnet').trim().toLowerCase()
+import { getJsonRpcFullnodeUrl } from '@mysten/sui/jsonRpc';
 
-export type SuiNetwork = 'mainnet' | 'testnet' | 'devnet'
+const rawObjectId = (import.meta.env.VITE_PORTFOLIO_OBJECT_ID ?? '').trim();
+const rawNetwork = (import.meta.env.VITE_SUI_NETWORK ?? 'mainnet').trim();
 
-function resolveNetwork(network: string): SuiNetwork {
-  if (network === 'testnet' || network === 'devnet') {
-    return network
+function normalizeNetworkLabel(value: string): string {
+  const lower = value.toLowerCase();
+  if (lower === 'mainnet' || lower === 'sui mainnet') {
+    return 'Sui Mainnet';
   }
-
-  return 'mainnet'
+  return value || 'Sui Mainnet';
 }
 
-export const suiNetwork = resolveNetwork(rawNetwork)
-export const packageId = (import.meta.env.VITE_PACKAGE_ID ?? '').trim()
-export const portfolioObjectId = (import.meta.env.VITE_PORTFOLIO_OBJECT_ID ?? '').trim()
+export const objectId = rawObjectId;
+export const networkLabel = normalizeNetworkLabel(rawNetwork);
+export const rpcUrl = getJsonRpcFullnodeUrl('mainnet');
 
-export const hasPackageId = packageId.length > 0
-export const hasPortfolioObjectId = portfolioObjectId.length > 0
-
-export function getObjectExplorerUrl(network: SuiNetwork, objectId: string) {
-  return `https://suiscan.xyz/${network}/object/${objectId}/fields`
-}
-
-export function getTransactionExplorerUrl(network: SuiNetwork, digest: string) {
-  return `https://suiscan.xyz/${network}/tx/${digest}`
-}
-
-export function truncateMiddle(value: string, visible = 6) {
-  if (value.length <= visible * 2 + 3) {
-    return value
-  }
-
-  return `${value.slice(0, visible)}...${value.slice(-visible)}`
+export function suiscanObjectUrl(id: string): string {
+  return `https://suiscan.xyz/mainnet/object/${id}/fields`;
 }

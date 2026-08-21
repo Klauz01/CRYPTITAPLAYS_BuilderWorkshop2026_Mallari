@@ -1,9 +1,7 @@
 [package]
-name = "portfolio"
+name = "builder_card"
 version = "0.1.0"
 edition = "2024"
 
-[dependencies]
-
 [addresses]
-portfolio = "0x0"
+builder_card = "0x0"

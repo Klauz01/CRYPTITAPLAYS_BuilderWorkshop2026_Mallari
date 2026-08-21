@@ -1,42 +1,33 @@
-import type { SuiNetwork } from './config'
+/** Raw on-chain string fields from content.fields */
+export type BuilderCardFields = {
+  builder_name: string;
+  builder_no: string;
+  profession: string;
+  program: string;
+  country: string;
+  specialization: string;
+  building_since: string;
+  focus: string;
+  community: string;
+  skills: string;
+  issued: string;
+  about: string;
+  photo_url: string;
+};
 
-export interface PortfolioFields {
-  name: string
-  course: string
-  school: string
-  about: string
-  linkedin: string
-  github: string
-  skills: string[]
-}
+/** View model for ProfileCard */
+export type BuilderCardView = {
+  fields: BuilderCardFields;
+  skills: string[];
+  objectId: string;
+  owner: string;
+  networkLabel: string;
+};
 
-export interface CreatePortfolioInput {
-  name: string
-  course: string
-  school: string
-  about: string
-  linkedin: string
-  github: string
-  skills: string
-}
+export type PortfolioStatus = 'idle' | 'loading' | 'empty' | 'success' | 'error';
 
-export interface PortfolioQueryState {
-  data: PortfolioFields | null
-  loading: boolean
-  error: string | null
-}
-
-export interface CreatePortfolioState {
-  digest: string | null
-  objectId: string | null
-  isSubmitting: boolean
-  error: string | null
-  outcome: 'idle' | 'success' | 'rejected' | 'failed'
-}
-
-export interface ProofProps {
-  objectId: string
-  digest: string | null
-  network: SuiNetwork
-  loadError?: string | null
-}
+export type UsePortfolioResult = {
+  status: PortfolioStatus;
+  data: BuilderCardView | null;
+  error: string | null;
+};

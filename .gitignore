@@ -1,15 +1,20 @@
-# Internal / non-student
-spec/
+# Dependencies
+node_modules/
 
-# Web
-web/node_modules/
+# Environment
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
 web/dist/
-web/.env
-web/.env.local
-web/.env.*.local
 
-# Move generated / local
+# Move build artifacts
 move/build/
-move/.coverage_map.mv
-move/.trace/
-move/Published.toml
+move/.move/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log

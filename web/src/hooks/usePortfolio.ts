@@ -1,61 +1,79 @@
-import { useQuery } from '@tanstack/react-query'
-import { useDAppKit } from '@mysten/dapp-kit-react'
-import type { SuiNetwork } from '../config'
-import type { PortfolioFields, PortfolioQueryState } from '../types'
+import { useEffect, useState } from 'react';
+import { networkLabel, objectId } from '../config';
+import { mapBuilderCard } from '../lib/mapBuilderCard';
+import { suiClient } from '../lib/suiClient';
+import type { BuilderCardView, PortfolioStatus, UsePortfolioResult } from '../types';
 
-function normalizeField(value: unknown) {
-  return typeof value === 'string' ? value : ''
-}
+const BUILDER_CARD_TYPE_SUFFIX = '::builder_card::BuilderCard';
 
-function mapPortfolioFields(rawFields: Record<string, unknown>): PortfolioFields {
-  return {
-    name: normalizeField(rawFields.name),
-    course: normalizeField(rawFields.course),
-    school: normalizeField(rawFields.school),
-    about: normalizeField(rawFields.about),
-    linkedin: normalizeField(rawFields.linkedin_url),
-    github: normalizeField(rawFields.github_url),
-    skills: normalizeField(rawFields.skills)
-      .split(',')
-      .map((skill) => skill.trim())
-      .filter(Boolean),
-  }
-}
+export function usePortfolio(): UsePortfolioResult {
+  const [status, setStatus] = useState<PortfolioStatus>(() =>
+    objectId ? 'loading' : 'empty',
+  );
+  const [data, setData] = useState<BuilderCardView | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-export function usePortfolio(objectId: string, network: SuiNetwork): PortfolioQueryState {
-  const dAppKit = useDAppKit()
-  const query = useQuery({
-    queryKey: ['portfolio', network, objectId],
-    enabled: objectId.length > 0,
-    queryFn: async () => {
-      const client = dAppKit.getClient(network)
-      const { object } = await client.core.getObject({
-        objectId,
-        include: {
-          json: true,
-          previousTransaction: true,
-        },
-      })
-
-      if (!object?.json || typeof object.json !== 'object' || Array.isArray(object.json)) {
-        throw new Error('This object does not expose readable portfolio fields.')
-      }
-
-      return mapPortfolioFields(object.json as Record<string, unknown>)
-    },
-  })
-
-  if (!objectId) {
-    return {
-      data: null,
-      loading: false,
-      error: null,
+  useEffect(() => {
+    if (!objectId) {
+      setStatus('empty');
+      setData(null);
+      setError(null);
+      return;
     }
-  }
 
-  return {
-    data: query.data ?? null,
-    loading: query.isPending,
-    error: query.error instanceof Error ? query.error.message : null,
-  }
+    let cancelled = false;
+
+    async function loadPortfolio() {
+      setStatus('loading');
+      setData(null);
+      setError(null);
+
+      try {
+        const response = await suiClient.getObject({
+          id: objectId,
+          options: { showContent: true, showOwner: true },
+        });
+
+        if (cancelled) return;
+
+        const objectData = response.data;
+        if (!objectData) {
+          throw new Error('Object not found.');
+        }
+
+        const content = objectData.content;
+        if (!content || content.dataType !== 'moveObject') {
+          throw new Error('Object content is not a Move object.');
+        }
+
+        if (!content.type.endsWith(BUILDER_CARD_TYPE_SUFFIX)) {
+          throw new Error(`Unexpected object type: ${content.type}`);
+        }
+
+        const fields = content.fields as Record<string, unknown>;
+        const view = mapBuilderCard(
+          fields,
+          objectData.objectId,
+          objectData.owner,
+          networkLabel,
+        );
+
+        setData(view);
+        setStatus('success');
+      } catch (fetchError) {
+        if (cancelled) return;
+        console.error('Failed to load BuilderCard:', fetchError);
+        setStatus('error');
+        setError('Could not load on-chain data.');
+      }
+    }
+
+    void loadPortfolio();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return { status, data, error };
 }
