@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type RefObject } from 'react';
+import CardPhotoExport from './components/CardPhotoExport';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import MoltenMetal from './components/MoltenMetal';
@@ -113,26 +114,30 @@ export default function App() {
           padding: `${STAGE_GAP}px 12px`,
         }}
       >
-        <div
-          className="card-stage__scale-box"
-          style={{
-            width: CARD_WIDTH * scale,
-            height: stackHeight * scale,
-          }}
-        >
-          <div
-            ref={stackRef}
-            className="card-stage__stack"
-            style={{
-              transform: `scale(${scale})`,
-            }}
-          >
-            <div className="card-scale">
-              <ProfileCard portfolio={portfolio} />
+        <CardPhotoExport portfolio={portfolio}>
+          {({ onCameraClick, isGenerating }) => (
+            <div
+              className="card-stage__scale-box"
+              style={{
+                width: CARD_WIDTH * scale,
+                height: stackHeight * scale,
+              }}
+            >
+              <div
+                ref={stackRef}
+                className="card-stage__stack"
+                style={{
+                  transform: `scale(${scale})`,
+                }}
+              >
+                <div className="card-scale">
+                  <ProfileCard portfolio={portfolio} />
+                </div>
+                <SocialActions onCameraClick={onCameraClick} isGenerating={isGenerating} />
+              </div>
             </div>
-            <SocialActions />
-          </div>
-        </div>
+          )}
+        </CardPhotoExport>
       </main>
       <Footer ref={footerRef} />
     </div>

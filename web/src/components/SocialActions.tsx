@@ -20,7 +20,12 @@ function CameraIcon() {
   );
 }
 
-export default function SocialActions() {
+type SocialActionsProps = {
+  onCameraClick?: () => void;
+  isGenerating?: boolean;
+};
+
+export default function SocialActions({ onCameraClick, isGenerating = false }: SocialActionsProps) {
   return (
     <div className="social-actions">
       <a
@@ -35,8 +40,11 @@ export default function SocialActions() {
       </a>
       <button
         type="button"
-        className="social-actions__camera"
-        aria-label="Camera (coming soon)"
+        className={`social-actions__camera${isGenerating ? ' is-generating' : ''}`}
+        aria-label={isGenerating ? 'Generating builder card photo' : 'Download builder card photo'}
+        aria-busy={isGenerating}
+        disabled={isGenerating || !onCameraClick}
+        onClick={onCameraClick}
       >
         <CameraIcon />
       </button>

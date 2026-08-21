@@ -1,4 +1,4 @@
-import { siFacebook, siGithub, siSui, type SimpleIcon } from 'simple-icons';
+import { siFacebook, siGithub, siInstagram, siSui, siX, type SimpleIcon } from 'simple-icons';
 
 // LinkedIn was removed from simple-icons in v14 due to brand guidelines.
 const siLinkedin: SimpleIcon = {
@@ -10,4 +10,4 @@ const siLinkedin: SimpleIcon = {
   hex: '0A66C2',
 };
 
-export { siFacebook, siGithub, siLinkedin, siSui };
+export { siFacebook, siGithub, siInstagram, siLinkedin, siSui, siX };
