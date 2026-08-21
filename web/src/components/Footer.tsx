@@ -6,11 +6,9 @@ const PROOF_COPY =
 const Footer = forwardRef<HTMLElement>(function Footer(_props, ref) {
   return (
     <footer ref={ref} className="site-footer">
-      <div className="site-footer__proof">
-        <h2 className="site-footer__proof-title">Proof of Learning &amp; Building</h2>
-        <p className="site-footer__proof-copy" title={PROOF_COPY}>
-          {PROOF_COPY}
-        </p>
+      <div className="site-footer__disclaimer">
+        <h2 className="site-footer__kicker">Proof of Learning &amp; Building</h2>
+        <p className="site-footer__copy">{PROOF_COPY}</p>
       </div>
     </footer>
   );
