@@ -36,7 +36,7 @@ export default function ProfileCard({ portfolio }: ProfileCardProps) {
   const placeholderName =
     status === 'loading'
       ? 'Loading on-chain profile…'
-      : 'Your builder name will appear here after the object loads.';
+      : 'Builder name';
   const placeholderField = status === 'loading' ? '…' : '—';
   const credentialUnavailable =
     status === 'empty' ? 'Not configured' : status === 'error' ? 'Unavailable' : '—';
