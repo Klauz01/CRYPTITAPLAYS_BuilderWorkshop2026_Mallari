@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+web/dist/
+
+# Move build artifacts
+move/build/
+move/.move/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
