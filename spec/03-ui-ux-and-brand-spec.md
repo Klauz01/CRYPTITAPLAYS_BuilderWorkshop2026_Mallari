@@ -212,14 +212,12 @@ Unchanged workshop layout from reference:
 - “Built on Sui” with logo link (`.back-built-on`)
 - Community Partners row with fixed SVGs from `web/public/assets/`:
 
-| Asset (normalize filename) | Alt label (reference) |
-| -------------------------- | --------------------- |
-| `devcon-laguna.svg` | DEVCON Philippines |
-| `aws-uphsl.svg` | AWS UPHSL |
-| `grantix.svg` | grantix |
-| `kamiyon.svg` | Kamiyon Studio |
-
-Partner `href` values may remain `#` until official URLs are supplied.
+| Asset (normalize filename) | Alt label (reference) | `href` |
+| -------------------------- | --------------------- | ------ |
+| `devcon-laguna.svg` | DEVCON Philippines | `https://www.facebook.com/DEVCONLAGUNA` |
+| `aws-uphsl.svg` | AWS UPHSL | `https://www.facebook.com/awssbg` |
+| `grantix.svg` | grantix | `https://www.facebook.com/grantix.global` |
+| `kamiyon.svg` | Kamiyon Studio | `https://www.facebook.com/kamiyonstudio` |
 
 ### 4.5 Skills chips
 

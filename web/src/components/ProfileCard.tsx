@@ -1,6 +1,8 @@
 import { useCallback, useState, type KeyboardEvent, type MouseEvent } from 'react';
+import { siSui } from '../lib/brandIcons';
 import { suiscanObjectUrl } from '../config';
 import type { UsePortfolioResult } from '../types';
+import BrandIcon from './BrandIcon';
 import '../styles/profile-card.css';
 
 type ProfileCardProps = {
@@ -290,7 +292,7 @@ export default function ProfileCard({ portfolio }: ProfileCardProps) {
               rel="noopener noreferrer"
               aria-label="Visit Sui"
             >
-              <img src="/assets/sui-logo.svg" alt="Sui" className="sui-logo" />
+              <BrandIcon icon={siSui} size={32} className="sui-logo" decorative />
             </a>
           </div>
         </div>
@@ -322,7 +324,7 @@ export default function ProfileCard({ portfolio }: ProfileCardProps) {
                 aria-label="Visit Sui"
                 tabIndex={backFaceTabIndex}
               >
-                <img src="/assets/sui-logo.svg" alt="Sui" />
+                <BrandIcon icon={siSui} size={26} decorative />
                 <span>Sui</span>
               </a>
             </div>
@@ -334,7 +336,7 @@ export default function ProfileCard({ portfolio }: ProfileCardProps) {
               <div className="community-logos">
                 <a
                   className="community-partner"
-                  href="#"
+                  href="https://www.facebook.com/DEVCONLAGUNA"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="DEVCON Philippines"
@@ -345,7 +347,7 @@ export default function ProfileCard({ portfolio }: ProfileCardProps) {
                 <div className="community-logo-divider" />
                 <a
                   className="community-partner"
-                  href="#"
+                  href="https://www.facebook.com/awssbg"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="AWS UPHSL"
@@ -356,7 +358,7 @@ export default function ProfileCard({ portfolio }: ProfileCardProps) {
                 <div className="community-logo-divider" />
                 <a
                   className="community-partner"
-                  href="#"
+                  href="https://www.facebook.com/grantix.global"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="grantix"
@@ -367,7 +369,7 @@ export default function ProfileCard({ portfolio }: ProfileCardProps) {
                 <div className="community-logo-divider" />
                 <a
                   className="community-partner"
-                  href="#"
+                  href="https://www.facebook.com/kamiyonstudio"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Kamiyon Studio"

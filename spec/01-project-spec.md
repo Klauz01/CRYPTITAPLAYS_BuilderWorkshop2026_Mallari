@@ -264,7 +264,7 @@ Learn (README + facilitator)
 | U-02 | Exact `@mysten/sui` version | Pin from official Sui docs on scaffold day. `[LOCKED]` |
 | U-03 | PublicNode JSON-RPC URLs | Do not copy. Use `getFullnodeUrl('mainnet')`. `[LOCKED]` |
 | U-04 | CLI gas-coin / address balance | README points at current Sui docs if publish fails. `[LOCKED]` |
-| U-05 | Partner link URLs on card back | Placeholder `#` in prototype; lock real URLs in `03` if provided. `[UNKNOWN]` |
+| U-05 | Partner link URLs on card back | **Locked** in `03` / `05`: DEVCON Laguna, AWS Student Community, Grantix, Kamiyon Studio Facebook pages. `[LOCKED]` |
 | U-06 | Env rename `VITE_PORTFOLIO_OBJECT_ID` → `VITE_BUILDER_CARD_OBJECT_ID` | **Keep** `VITE_PORTFOLIO_OBJECT_ID` for workshop materials unless all specs migrate together. `[LOCKED]` |
 | U-07 | Hosting | Vercel, `web/` root. `[LOCKED]` |
 | U-08 | Invalid / broken `photo_url` | Show broken-image or placeholder state on card; do not fall back to another person’s photo. `[RECOMMENDATION]` |

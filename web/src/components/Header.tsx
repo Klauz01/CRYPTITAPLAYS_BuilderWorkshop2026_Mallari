@@ -1,6 +1,13 @@
-export default function Header() {
+import { forwardRef } from 'react';
+import { siGithub } from '../lib/brandIcons';
+import BrandIcon from './BrandIcon';
+
+const GITHUB_REPO_URL =
+  'https://github.com/owenlim225/Cryptita-plays-builder-workshop';
+
+const Header = forwardRef<HTMLElement>(function Header(_props, ref) {
   return (
-    <header className="site-header">
+    <header ref={ref} className="site-header">
       <a
         className="site-header__link"
         href="https://www.facebook.com/cryptitaplays"
@@ -14,6 +21,19 @@ export default function Header() {
           alt="Cryptita Plays"
         />
       </a>
+
+      <a
+        className="site-header__github"
+        href={GITHUB_REPO_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="View workshop source on GitHub"
+      >
+        <BrandIcon icon={siGithub} size={18} decorative />
+        <span className="site-header__github-label">GitHub</span>
+      </a>
     </header>
   );
-}
+});
+
+export default Header;

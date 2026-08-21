@@ -725,8 +725,6 @@ opacity: 0.26;
   width: 32px;
   height: 32px;
 
-  object-fit: contain;
-
   opacity: 0.88;
 
   transition:
@@ -1235,13 +1233,11 @@ opacity: 0.26;
 }
 
 
-.back-built-on img {
+.back-built-on svg {
   display: block;
 
   width: 26px;
   height: 26px;
-
-  object-fit: contain;
 }
 
 

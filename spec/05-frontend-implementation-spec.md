@@ -498,7 +498,7 @@ OBJECT ID text or adjacent control may link to `suiscanObjectUrl(objectId)`.
 
 ### Back face
 
-Fixed workshop assets only — not from chain. Partner `href` may be `#` until URLs are supplied.
+Fixed workshop assets only — not from chain. Partner `href` values (left to right): `https://www.facebook.com/DEVCONLAGUNA`, `https://www.facebook.com/awssbg`, `https://www.facebook.com/grantix.global`, `https://www.facebook.com/kamiyonstudio`.
 
 ### Skills parsing
 
@@ -570,7 +570,7 @@ Do **not** implement, import, or document:
 | `https://www.sui.io/` | Sui logo boxes |
 | `https://suiscan.xyz/mainnet/object/{id}/fields` | OBJECT ID |
 | Cryptita Facebook / LinkedIn | Header (optional), Footer |
-| Partner URLs on card back | When provided; `#` until then |
+| Partner URLs on card back | DEVCON Laguna, AWS Student Community, Grantix, Kamiyon Studio Facebook pages (see § Back face) |
 
 Forbidden: original camp GitHub sample, Vercel demo of prior workshop, organizer lockup URLs.
 
