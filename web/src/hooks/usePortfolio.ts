@@ -1,8 +1,14 @@
 import { useEffect, useState } from 'react';
+
 import { networkLabel, objectId } from '../config';
 import { mapBuilderCard } from '../lib/mapBuilderCard';
 import { suiClient } from '../lib/suiClient';
-import type { BuilderCardView, PortfolioStatus, UsePortfolioResult } from '../types';
+
+import type {
+  BuilderCardView,
+  PortfolioStatus,
+  UsePortfolioResult,
+} from '../types';
 
 const BUILDER_CARD_TYPE_SUFFIX = '::builder_card::BuilderCard';
 
@@ -10,6 +16,7 @@ export function usePortfolio(): UsePortfolioResult {
   const [status, setStatus] = useState<PortfolioStatus>(() =>
     objectId ? 'loading' : 'empty',
   );
+
   const [data, setData] = useState<BuilderCardView | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,31 +37,38 @@ export function usePortfolio(): UsePortfolioResult {
 
       try {
         const response = await suiClient.getObject({
-          id: objectId,
-          options: { showContent: true, showOwner: true },
+          objectId,
+          include: {
+            json: true,
+          },
         });
 
         if (cancelled) return;
 
-        const objectData = response.data;
-        if (!objectData) {
-          throw new Error('Object not found.');
+        const object = response.object;
+
+        if (!object) {
+          throw new Error('BuilderCard object not found.');
         }
 
-        const content = objectData.content;
-        if (!content || content.dataType !== 'moveObject') {
-          throw new Error('Object content is not a Move object.');
+        if (!object.type?.endsWith(BUILDER_CARD_TYPE_SUFFIX)) {
+          throw new Error(
+            `Unexpected object type: ${object.type ?? 'unknown'}`,
+          );
         }
 
-        if (!content.type.endsWith(BUILDER_CARD_TYPE_SUFFIX)) {
-          throw new Error(`Unexpected object type: ${content.type}`);
+        if (!object.json || typeof object.json !== 'object') {
+          throw new Error(
+            'BuilderCard object does not contain readable JSON fields.',
+          );
         }
 
-        const fields = content.fields as Record<string, unknown>;
+        const fields = object.json as Record<string, unknown>;
+
         const view = mapBuilderCard(
           fields,
-          objectData.objectId,
-          objectData.owner,
+          object.objectId,
+          object.owner,
           networkLabel,
         );
 
@@ -62,9 +76,16 @@ export function usePortfolio(): UsePortfolioResult {
         setStatus('success');
       } catch (fetchError) {
         if (cancelled) return;
+
         console.error('Failed to load BuilderCard:', fetchError);
+
         setStatus('error');
-        setError('Could not load on-chain data.');
+
+        setError(
+          fetchError instanceof Error
+            ? fetchError.message
+            : 'Could not load on-chain data.',
+        );
       }
     }
 
@@ -75,5 +96,9 @@ export function usePortfolio(): UsePortfolioResult {
     };
   }, []);
 
-  return { status, data, error };
+  return {
+    status,
+    data,
+    error,
+  };
 }

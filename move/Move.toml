@@ -3,5 +3,5 @@ name = "builder_card"
 version = "0.1.0"
 edition = "2024"
 
-[addresses]
-builder_card = "0x0"
+[dependencies]
+builder_registry = { git = "https://github.com/Cryptita-Plays/cryptita-builder-registry.git", subdir = "builder_registry", rev = "main" }
