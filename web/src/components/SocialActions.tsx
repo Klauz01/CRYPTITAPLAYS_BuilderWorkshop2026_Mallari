@@ -20,16 +20,40 @@ function CameraIcon() {
   );
 }
 
+function SpinIcon() {
+  return (
+    <svg
+      width={18}
+      height={18}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 3a9 9 0 0 1 9 9" />
+      <path d="M21 12h-3.2" />
+    </svg>
+  );
+}
+
 type SocialActionsProps = {
   onCameraClick?: () => void;
   isGenerating?: boolean;
   canExport?: boolean;
+  isOrbiting?: boolean;
+  onOrbitClick?: () => void;
 };
 
 export default function SocialActions({
   onCameraClick,
   isGenerating = false,
   canExport = false,
+  isOrbiting = false,
+  onOrbitClick,
 }: SocialActionsProps) {
   const cameraDisabled = isGenerating || !onCameraClick || !canExport;
   const cameraLabel = isGenerating
@@ -37,6 +61,9 @@ export default function SocialActions({
     : canExport
       ? 'Download builder card photo'
       : 'Download builder card photo (available after the card loads)';
+  const orbitLabel = isOrbiting
+    ? 'Stop card rotation and return to the front'
+    : 'Spin the card in a continuous loop';
 
   return (
     <div className="social-actions">
@@ -50,6 +77,16 @@ export default function SocialActions({
       >
         <CameraIcon />
         <span className="social-actions__label">Camera</span>
+      </button>
+      <button
+        type="button"
+        className={`social-actions__link social-actions__spin${isOrbiting ? ' is-active' : ''}`}
+        aria-label={orbitLabel}
+        aria-pressed={isOrbiting}
+        onClick={onOrbitClick}
+      >
+        <SpinIcon />
+        <span className="social-actions__label">{isOrbiting ? 'Stop' : 'Spin'}</span>
       </button>
       <a
         className="social-actions__link"

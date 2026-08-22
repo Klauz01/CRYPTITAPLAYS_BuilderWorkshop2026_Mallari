@@ -164,7 +164,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
   pointer-events: none;
 }
 
@@ -189,9 +189,18 @@ button {
   transform-origin: center center;
 }
 
+.card-orbit {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform-origin: center center;
+  will-change: transform;
+}
+
 .card-scale__inner {
   width: 1020px;
   max-width: none;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
 }
 
 .social-actions {
@@ -268,4 +277,14 @@ button {
 .social-actions__camera.is-generating {
   color: var(--chain-primary);
   border-color: rgba(var(--chain-primary-rgb), 0.35);
+}
+
+.social-actions__spin {
+  cursor: pointer;
+}
+
+.social-actions__spin.is-active {
+  color: var(--chain-primary);
+  border-color: rgba(var(--chain-primary-rgb), 0.35);
+  background: rgba(var(--chain-primary-rgb), 0.08);
 }

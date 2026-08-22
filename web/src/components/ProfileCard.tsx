@@ -1,4 +1,5 @@
-import { useCallback, useState, type KeyboardEvent, type MouseEvent } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from 'react';
+import { useCardOrbit } from '../hooks/useCardOrbit';
 import { PROFILE_PHOTO_PATH } from '../lib/profilePhoto';
 import type { UsePortfolioResult } from '../types';
 import { CardBackFace, CardFrontFace } from './ProfileCardFaces';
@@ -6,16 +7,33 @@ import '../styles/profile-card.css';
 
 type ProfileCardProps = {
   portfolio: UsePortfolioResult;
+  isOrbiting?: boolean;
 };
 
-export default function ProfileCard({ portfolio }: ProfileCardProps) {
+export default function ProfileCard({ portfolio, isOrbiting = false }: ProfileCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [photoBroken, setPhotoBroken] = useState(false);
   const [copiedField, setCopiedField] = useState<'objectId' | 'owner' | null>(null);
+  const startAngleRef = useRef(0);
+  const wasOrbitingRef = useRef(false);
+  const isFlippedRef = useRef(isFlipped);
+  isFlippedRef.current = isFlipped;
+
+  const { orbitRef, isAnimating } = useCardOrbit(isOrbiting, startAngleRef);
+  const motionLocked = isOrbiting || isAnimating;
 
   const showPhoto = !photoBroken;
 
+  useLayoutEffect(() => {
+    if (isOrbiting && !wasOrbitingRef.current) {
+      startAngleRef.current = isFlippedRef.current ? Math.PI : 0;
+      setIsFlipped(false);
+    }
+    wasOrbitingRef.current = isOrbiting;
+  }, [isOrbiting]);
+
   const handleCardClick = (event: MouseEvent<HTMLDivElement>) => {
+    if (motionLocked) return;
     if ((event.target as HTMLElement).closest('a, button')) {
       return;
     }
@@ -23,6 +41,7 @@ export default function ProfileCard({ portfolio }: ProfileCardProps) {
   };
 
   const handleFlipKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (motionLocked) return;
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       setIsFlipped((current) => !current);
@@ -56,9 +75,10 @@ export default function ProfileCard({ portfolio }: ProfileCardProps) {
   const backFaceTabIndex = isFlipped ? 0 : -1;
 
   return (
-    <div className="card-scale__inner">
+    <div className="card-orbit" ref={orbitRef}>
+      <div className="card-scale__inner">
       <div
-        className={`profile-card${isFlipped ? ' is-flipped' : ''}`}
+        className={`profile-card${isFlipped ? ' is-flipped' : ''}${motionLocked ? ' is-orbiting' : ''}`}
         onClick={handleCardClick}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -68,8 +88,10 @@ export default function ProfileCard({ portfolio }: ProfileCardProps) {
         <button
           type="button"
           className="flip-btn"
+          disabled={motionLocked}
           onClick={(event) => {
             event.stopPropagation();
+            if (motionLocked) return;
             setIsFlipped((current) => !current);
           }}
           onKeyDown={handleFlipKeyDown}
@@ -96,6 +118,7 @@ export default function ProfileCard({ portfolio }: ProfileCardProps) {
           backFaceTabIndex={backFaceTabIndex}
           backFaceAriaHidden={!isFlipped}
         />
+      </div>
       </div>
     </div>
   );

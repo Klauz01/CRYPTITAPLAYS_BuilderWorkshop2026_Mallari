@@ -88,6 +88,7 @@ export default function App() {
   const headerRef = useRef<HTMLElement>(null);
   const footerRef = useRef<HTMLElement>(null);
   const { scale, stackHeight, stageInsets } = useCardLayout(stageRef, stackRef, headerRef, footerRef);
+  const [isOrbiting, setIsOrbiting] = useState(false);
 
   useEffect(() => {
     if (portfolio.status === 'success' && portfolio.data?.fields.builder_name) {
@@ -131,12 +132,14 @@ export default function App() {
                 }}
               >
                 <div className="card-scale">
-                  <ProfileCard portfolio={portfolio} />
+                  <ProfileCard portfolio={portfolio} isOrbiting={isOrbiting} />
                 </div>
                 <SocialActions
                   onCameraClick={onCameraClick}
                   isGenerating={isGenerating}
                   canExport={canExport}
+                  isOrbiting={isOrbiting}
+                  onOrbitClick={() => setIsOrbiting((current) => !current)}
                 />
               </div>
             </div>

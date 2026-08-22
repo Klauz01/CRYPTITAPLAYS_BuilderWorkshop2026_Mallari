@@ -894,6 +894,12 @@ opacity: 0.26;
   transform: rotateY(180deg);
 }
 
+.profile-card.is-orbiting {
+  transform: none;
+  transition: none;
+  cursor: default;
+}
+
 
 
 /* =========================================================
