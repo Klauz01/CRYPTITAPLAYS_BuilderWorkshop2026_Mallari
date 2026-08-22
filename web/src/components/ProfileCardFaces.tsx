@@ -298,7 +298,7 @@ export function CardBackFace({
               aria-label="DEVCON Philippines"
               tabIndex={backFaceTabIndex}
             >
-              <img src="/assets/devcon-laguna.svg" alt="DEVCON Philippines" />
+              <img src="/assets/icon/devcon-laguna.svg" alt="DEVCON Philippines" />
             </a>
             <div className="community-logo-divider" />
             <a
@@ -309,7 +309,7 @@ export function CardBackFace({
               aria-label="AWS UPHSL"
               tabIndex={backFaceTabIndex}
             >
-              <img src="/assets/aws-uphsl.svg" alt="AWS UPHSL" />
+              <img src="/assets/icon/aws-uphsl.svg" alt="AWS UPHSL" />
             </a>
             <div className="community-logo-divider" />
             <a
@@ -320,7 +320,7 @@ export function CardBackFace({
               aria-label="grantix"
               tabIndex={backFaceTabIndex}
             >
-              <img src="/assets/grantix.svg" alt="grantix" />
+              <img src="/assets/icon/grantix.svg" alt="grantix" />
             </a>
             <div className="community-logo-divider" />
             <a
@@ -331,7 +331,7 @@ export function CardBackFace({
               aria-label="Kamiyon Studio"
               tabIndex={backFaceTabIndex}
             >
-              <img src="/assets/kamiyon.svg" alt="Kamiyon Studio" />
+              <img src="/assets/icon/kamiyon.svg" alt="Kamiyon Studio" />
             </a>
           </div>
         </div>
