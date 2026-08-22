@@ -1,6 +1,29 @@
-![](docs/readme/01-banner.png)
+![Cryptita Plays banner](docs/readme/01-banner.png)
 
-A workshop project that pairs a **Sui Move** `BuilderCard` **package** with a **read-only Vite/React site**.
+# Cryptita Plays — Builder Workshop
+
+**A hands-on Web3 workshop by Cryptita Plays**
+
+Ready to move from learning Web3 concepts to actually building and deploying on-chain? This repo is your workshop companion: you'll set up a development environment, publish a smart contract, connect a website to on-chain data, and deploy your application.
+
+It is designed as a practical continuation for students and builders who have previously joined **Base Build** and **ChainTalk**.
+
+
+|               |                   |
+| ------------- | ----------------- |
+| **Date**      | Sunday            |
+| **Time**      | 1:00 PM – 5:00 PM |
+| **Format**    | Hands-on workshop |
+| **Organizer** | Cryptita Plays    |
+
+
+**Learn → Build → Deploy** — by the end, you'll work toward a functional website connected to a deployed on-chain `BuilderCard`.
+
+Bring your laptop. Come ready to build. This isn't just another Web3 talk — you'll build it, deploy it, and see it work.
+
+---
+
+This workshop project pairs a **Sui Move** `BuilderCard` **package** with a **read-only Vite/React site**.
 
 You publish and create your card with the **Sui CLI**, then set one object ID so the website can read on-chain profile data over **Sui GraphQL**.
 
@@ -8,19 +31,24 @@ There is **no browser wallet**, **no create form**, and **no on-page transaction
 
 ---
 
+
+
 ## Essential resources
 
-| Resource                  | Link / path                                                                                                              |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Node.js LTS               | [https://nodejs.org/](https://nodejs.org/)                                                                               |
+
+| Resource                  | Link / path                                                                                                                          |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Node.js LTS               | [https://nodejs.org/](https://nodejs.org/)                                                                                           |
 | Sui CLI install           | [https://docs.sui.io/guides/developer/getting-started/sui-install](https://docs.sui.io/guides/developer/getting-started/sui-install) |
-| Suiscan (Mainnet)         | [https://suiscan.xyz/mainnet](https://suiscan.xyz/mainnet)                                                               |
-| Builder Registry (shared) | [https://github.com/Cryptita-Plays/cryptita-builder-registry](https://github.com/Cryptita-Plays/cryptita-builder-registry) |
-| Upstream workshop repo    | [https://github.com/owenlim225/CRYPTITAPLAYS_BuilderWorkshop2026](https://github.com/owenlim225/CRYPTITAPLAYS_BuilderWorkshop2026) |
-| QR code generator         | [https://www.qr-code-generator.com/solutions/text-qr-code/](https://www.qr-code-generator.com/solutions/text-qr-code/) |
-| This repo layout          | `move/` (contract), `web/` (frontend), `spec/` (detailed specs)                                                          |
-| Profile photo file        | `web/public/assets/profile.png`                                                                                          |
-| Frontend env template     | `web/.env.example`                                                                                                       |
+| Suiscan (Mainnet)         | [https://suiscan.xyz/mainnet](https://suiscan.xyz/mainnet)                                                                           |
+| Builder Registry (shared) | [https://github.com/Cryptita-Plays/cryptita-builder-registry](https://github.com/Cryptita-Plays/cryptita-builder-registry)           |
+| Upstream workshop repo    | [https://github.com/owenlim225/CRYPTITAPLAYS_BuilderWorkshop2026](https://github.com/owenlim225/CRYPTITAPLAYS_BuilderWorkshop2026)   |
+| QR code generator         | [https://www.qr-code-generator.com/solutions/text-qr-code/](https://www.qr-code-generator.com/solutions/text-qr-code/)               |
+| This repo layout          | `move/` (contract), `web/` (frontend), `spec/` (detailed specs)                                                                      |
+| Profile photo file        | `web/public/assets/profile.png`                                                                                                      |
+| Frontend env template     | `web/.env.example`                                                                                                                   |
+
+
 
 ### Quick command cheat sheet
 
@@ -48,10 +76,14 @@ npm run preview
 
 ---
 
+
+
 ## What you build
 
 1. **Move package** (`move/`) — `builder_card` module with an owned `BuilderCard`, Display metadata, and `create_builder_card` (builder number claimed automatically from the shared registry).
 2. **Static website** (`web/`) — single-viewport homepage that reads one on-chain object, shows your profile photo from `web/public/assets/profile.png`, and exports a card PNG client-side.
+
+
 
 ### How data flows
 
@@ -66,6 +98,8 @@ npm run preview
 
 ---
 
+
+
 ## Prerequisites
 
 1. Install [Node.js LTS](https://nodejs.org/).
@@ -73,13 +107,14 @@ npm run preview
 3. Create a **Mainnet** Sui address and obtain SUI from workshop facilitators (see workshop path below).
 4. Have a GitHub account and (for hosting) a Vercel account.
 
+
 ### Verify Sui CLI
 
 ```bash
 sui --version
 ```
 
-![](docs/readme/02-sui-version.png)
+![Sui CLI version output](docs/readme/02-sui-version.png)
 
 Expected: your installed Sui CLI version string (for example `sui 1.x.x`).
 
@@ -100,6 +135,8 @@ Do **not** use Testnet for the workshop production path. Optional Testnet practi
 
 ---
 
+
+
 ## Repository layout
 
 ```text
@@ -111,6 +148,8 @@ spec/     Workshop specifications (aligned with this repo)
 
 ---
 
+
+
 ## Step-by-step workshop path
 
 Follow these steps in order.
@@ -120,7 +159,7 @@ Follow these steps in order.
 1. Open the upstream repo: [https://github.com/owenlim225/CRYPTITAPLAYS_BuilderWorkshop2026](https://github.com/owenlim225/CRYPTITAPLAYS_BuilderWorkshop2026)
 2. Click **Star** on the upstream repo (yellow star = starred).
 
-![](docs/readme/03-github-star.png)
+![GitHub star on the upstream repo](docs/readme/03-github-star.png)
 
 3. Click **Fork**.
    - **Owner:** your GitHub account
@@ -128,7 +167,7 @@ Follow these steps in order.
    - Copy the **main** branch only
    - Click **Create fork**
 
-![](docs/readme/04-github-fork.png)
+![GitHub create fork form](docs/readme/04-github-fork.png)
 
 ### Step 1 — Clone your fork, open VS Code, install frontend, get Mainnet SUI
 
@@ -141,15 +180,14 @@ cd CRYPTITAPLAYS_BuilderWorkshop2026_LastName
 code .
 ```
 
-On PowerShell:
+VS Code should open the project:
 
-```powershell
-git clone https://github.com/YOUR_GITHUB_USERNAME/CRYPTITAPLAYS_BuilderWorkshop2026_LastName.git
-cd CRYPTITAPLAYS_BuilderWorkshop2026_LastName
-code .
-```
+![VS Code opened on the cloned workshop repo](docs/readme/05-vscode-opened.png)
 
-3. In the project terminal, install the frontend and copy the env file:
+3. In VS Code, open a new terminal with **Ctrl+Shift+backtick** (Terminal → New Terminal; backtick is the same key as `~`).
+4. In the project terminal, install the frontend and copy the env file.
+
+Git Bash / macOS / Linux:
 
 ```bash
 cd web
@@ -157,7 +195,7 @@ npm install
 cp .env.example .env
 ```
 
-On PowerShell:
+PowerShell:
 
 ```powershell
 cd web
@@ -165,27 +203,31 @@ npm install
 Copy-Item .env.example .env
 ```
 
+![npm install and copied .env in VS Code](docs/readme/06-npm-install-env.png)
+
 Leave `VITE_PORTFOLIO_OBJECT_ID` empty for now. `web/.env.example` already sets `VITE_SUI_NETWORK=mainnet`.
 
-4. Confirm you are on Mainnet:
+5. Confirm you are on Mainnet:
 
 ```bash
 sui client active-env
 sui client switch --env mainnet
 ```
 
-5. If you do not have an address yet:
+6. If you do not have an address yet:
 
 ```bash
 sui client new-address ed25519
 sui client active-address
 ```
 
-6. Copy your address (starts with `0x`).
-7. Open [https://www.qr-code-generator.com/solutions/text-qr-code/](https://www.qr-code-generator.com/solutions/text-qr-code/) and paste your address to generate a QR code.
-8. Show the QR code to a **technical facilitator** and ask for **Mainnet SUI** for gas. Do **not** use the Testnet faucet for workshop production.
+7. Copy your address (starts with `0x`).
+8. Open [https://www.qr-code-generator.com/solutions/text-qr-code/](https://www.qr-code-generator.com/solutions/text-qr-code/) and paste your address to generate a QR code.
 
-9. Verify balance:
+![QR code generated from a Sui address](docs/readme/07-qr-code-address.png)
+
+9. Show the QR code to a **technical facilitator** and ask for **Mainnet SUI** for gas. Do **not** use the Testnet faucet for workshop production.
+10. Verify balance:
 
 ```bash
 sui client balance
@@ -195,7 +237,7 @@ sui client balance
 
 1. Replace `web/public/assets/profile.png` with your portrait.
 
-![](docs/readme/05-profile-file-tree.png)
+![profile.png selected in the VS Code file tree](docs/readme/08-profile-file-tree.png)
 
 2. Keep the **exact filename** `profile.png`.
 3. Prefer a square or portrait photo; it is cropped to the card frame.
@@ -203,7 +245,6 @@ sui client balance
 ### Step 3 — Run the site locally (empty card is OK)
 
 ```bash
-cd web
 npm run dev
 ```
 
@@ -211,7 +252,7 @@ Open [http://localhost:5173](http://localhost:5173)
 
 Expected:
 
-![](docs/readme/06-localhost-placeholder.png)
+![Local site showing placeholder BuilderCard](docs/readme/09-localhost-placeholder.png)
 
 - Card shows placeholders (`—` / `Builder name`)
 - Status dot next to BUILDER NO. is **grey**
@@ -223,6 +264,7 @@ Deploy `web/` first so you have a public HTTPS URL for the on-chain `website_url
 
 **Vercel settings:**
 
+
 | Setting                 | Value                                          |
 | ----------------------- | ---------------------------------------------- |
 | Root directory          | `web`                                          |
@@ -230,41 +272,62 @@ Deploy `web/` first so you have a public HTTPS URL for the on-chain `website_url
 | Output directory        | `dist`                                         |
 | Env (optional at first) | `VITE_SUI_NETWORK`, `VITE_PORTFOLIO_OBJECT_ID` |
 
+
 1. Go to [https://vercel.com/new](https://vercel.com/new).
 2. Click **Continue with GitHub**.
 
-![](docs/readme/07-vercel-continue-github.png)
+![Vercel Continue with GitHub](docs/readme/10-vercel-continue-github.png)
 
 3. **Import** your forked repo (`CRYPTITAPLAYS_BuilderWorkshop2026_LastName`).
 
-![](docs/readme/08-vercel-import-fork.png)
+![Vercel import forked repo](docs/readme/11-vercel-import-fork.png)
 
 4. Open **Root Directory**, select `web`, then **Continue**.
 
-![](docs/readme/09-vercel-root-web.png)
+![Vercel root directory set to web](docs/readme/12-vercel-root-web.png)
 
 5. Click **Deploy**.
 6. When deployment finishes, click **Continue to Dashboard**.
 
-![](docs/readme/10-vercel-congratulations.png)
+![Vercel deployment congratulations](docs/readme/13-vercel-congratulations.png)
 
 7. In the project sidebar, open **Settings → Environment Variables**.
 
-![](docs/readme/11-vercel-env-tab.png)
+![Vercel Environment Variables tab](docs/readme/14-vercel-env-tab.png)
 
 8. Click **Add Environment Variable**, then **Import .env** and choose your local `web/.env` file. Click **Save**.
 
-![](docs/readme/12-vercel-import-env.png)
+![Vercel Import .env](docs/readme/15-vercel-import-env.png)
 
-9. Confirm keys include `VITE_SUI_NETWORK=mainnet`. Set `VITE_PORTFOLIO_OBJECT_ID` empty until Step 8.
+9. Confirm the keys include `VITE_SUI_NETWORK=mainnet`. Leave `VITE_PORTFOLIO_OBJECT_ID` empty until Step 8.
 
-![](docs/readme/13-vercel-env-keys.png)
+![Vercel environment variable keys](docs/readme/16-vercel-env-keys.png)
 
 > **Warning:** Do not copy dummy placeholder values from the screenshot. Import your real `web/.env` from your machine.
 
-10. Copy your site URL, e.g. `https://your-name.vercel.app` (no trailing slash). You need this for `create_builder_card` in Step 7.
+10. After you save, click **Redeploy**.
+
+![Vercel prompt to redeploy after env change](docs/readme/17-vercel-redeploy.png)
+
+11. Open **Deployments** and wait until the latest production build on `main` shows **Ready**.
+
+![Vercel Deployments list with Ready production builds](docs/readme/18-vercel-deployments-ready.png)
+
+12. Open that deployment and copy your site URL.
+
+![Vercel deployment domains](docs/readme/19-vercel-copy-domain.png)
+
+You need this for `create_builder_card` in Step 7.
 
 ### Step 5 — Build and test the Move package
+
+Go back to VS Code.
+
+Open a new terminal with **Ctrl+Shift+backtick** (Terminal → New Terminal).
+
+![VS Code with an integrated terminal open](docs/readme/20-vscode-terminal.png)
+
+Then run:
 
 ```bash
 cd move
@@ -272,7 +335,9 @@ sui move build
 sui move test
 ```
 
-**Linux / macOS — `Move.lock` directory error**
+![sui move build and test output](docs/readme/21-sui-move-build-test.png)
+
+**Linux / macOS —** `Move.lock` **directory error**
 
 If `sui move build` fails because `Move.lock` is a directory:
 
@@ -285,36 +350,37 @@ sui move build
 ### Step 6 — Publish the package on Mainnet
 
 ```bash
-sui client switch --env mainnet
+sui client switch --env mainnet   # make sure you're on mainnet
 sui client active-address         # must be funded with Mainnet SUI
-cd move
-sui client publish --gas-budget 100000000
+sui client publish
 ```
+
+![sui client publish on Mainnet](docs/readme/22-sui-publish-mainnet.png)
 
 1. From the publish output, copy the **Package ID** (`Published Objects` / package digest).
 2. Save it somewhere safe. You need it for `--package` in the next step.
 
 ### Step 7 — Create your BuilderCard
 
-`builder_no` is **not** a CLI argument. It is claimed automatically from the shared Cryptita Builder Registry. Never pass `builder_no`.
-
 Pass the **shared registry object** first, then **12 strings** in this exact order:
 
-| #   | Argument                                   | Example                                     | You change? |
-| --- | ------------------------------------------ | ------------------------------------------- | ----------- |
-| 1   | `registry` (shared object ID)              | Mainnet ID below                            | **No** — copy as-is |
-| 2   | `builder_name`                             | `"Alex Rivera"`                             | **Yes** |
-| 3   | `profession`                               | `"Smart Contract Developer"`                | **Yes** |
-| 4   | `program`                                  | `"Cryptita Build & Deploy 2026"`            | **Yes** |
-| 5   | `country`                                  | `"Philippines"`                             | **Yes** |
-| 6   | `specialization`                           | `"DeFi Protocols"`                          | **Yes** |
-| 7   | `building_since`                           | `"2024"`                                    | **Yes** |
-| 8   | `focus`                                    | `"Move on Sui"`                             | **Yes** |
-| 9   | `community`                                | `"Cryptita Plays"`                          | **Yes** |
-| 10  | `skills` (comma-separated)                 | `"Move, Sui, TypeScript, React"`            | **Yes** |
-| 11  | `issued`                                   | `"August 2026"`                             | **No** — copy as-is |
-| 12  | `about` (on-chain only; not shown on site) | `"Workshop participant learning Sui Move."` | **Yes** |
-| 13  | `website_url` (no trailing slash)          | `"https://your-name.vercel.app"`            | **Yes** — your Step 4 URL |
+
+| #   | Argument                                   | Example                                                       | You change?                       |
+| --- | ------------------------------------------ | ------------------------------------------------------------- | --------------------------------- |
+| 1   | `registry` (shared object ID)              | Mainnet ID below                                              | **No**                            |
+| 2   | `builder_name`                             | `"Sherwin Limosnero"`                                         | **Yes**                           |
+| 3   | `profession`                               | `"Developer/Designer"`                                        | **Yes**                           |
+| 4   | `program`                                  | `"BSIT - GD"`                                                 | **Yes**                           |
+| 5   | `country`                                  | `"PH"`                                                        | **Yes**                           |
+| 6   | `specialization`                           | `"Game Development"`                                          | **Yes**                           |
+| 7   | `building_since`                           | `"2026"`                                                      | **Yes**                           |
+| 8   | `focus`                                    | `"Kamiyon Studio"`                                            | **Yes**                           |
+| 9   | `community`                                | `"Cryptita Plays"`                                            | **Yes**                           |
+| 10  | `skills` (comma-separated)                 | `"Leadership, Management, Design, Development"`               | **Yes (3–4 max)**                 |
+| 11  | `issued`                                   | `"August 2026"`                                               | **No — use the workshop value**   |
+| 12  | `about` (on-chain only; not shown on site) | `"Cryptita Plays Workshop participant learning Sui Move."`    | **Yes**                           |
+| 13  | `website_url` (no trailing slash)          | `"https://cryptita-plays-builder-workshop-eosin.vercel.app"`  | **Yes — your Step 4 URL**         |
+
 
 **Mainnet registry object ID (workshop production):**
 
@@ -332,6 +398,8 @@ Personalize only these **11 fields**: `builder_name`, `profession`, `program`, `
 
 #### Bash / macOS / Git Bash
 
+Replace `0xPACKAGE_ID` with your publish output. Personalize only the fields marked **Yes** in the table above.
+
 ```bash
 sui client call \
   --package 0xPACKAGE_ID \
@@ -339,22 +407,20 @@ sui client call \
   --function create_builder_card \
   --args \
     0x297cb610c0c47edc1e12008812f28cd8a1f35f95bb406d45f4b76fa9fda2e04c \
-    "Alex Rivera" \
-    "Smart Contract Developer" \
-    "Cryptita Build & Deploy 2026" \
-    "Philippines" \
-    "DeFi Protocols" \
-    "2024" \
-    "Move on Sui" \
+    "Sherwin Limosnero" \
+    "Developer/Designer" \
+    "BSIT - GD" \
+    "PH" \
+    "Game Development" \
+    "2026" \
+    "Kamiyon Studio" \
     "Cryptita Plays" \
-    "Move, Sui, TypeScript, React" \
+    "Leadership, Management, Design, Development" \
     "August 2026" \
-    "Workshop participant learning Sui Move." \
-    "https://your-name.vercel.app" \
+    "Cryptita Plays Workshop participant learning Sui Move." \
+    "https://cryptita-plays-builder-workshop-eosin.vercel.app" \
   --gas-budget 10000000
 ```
-
-Replace `0xPACKAGE_ID` with your publish output. Personalize only the fields marked **Yes** in the table above.
 
 #### PowerShell
 
@@ -365,18 +431,18 @@ sui client call `
   --function create_builder_card `
   --args `
     0x297cb610c0c47edc1e12008812f28cd8a1f35f95bb406d45f4b76fa9fda2e04c `
-    "Alex Rivera" `
-    "Smart Contract Developer" `
-    "Cryptita Build & Deploy 2026" `
-    "Philippines" `
-    "DeFi Protocols" `
-    "2024" `
-    "Move on Sui" `
+    "Sherwin Limosnero" `
+    "Developer/Designer" `
+    "BSIT - GD" `
+    "PH" `
+    "Game Development" `
+    "2026" `
+    "Kamiyon Studio" `
     "Cryptita Plays" `
-    "Move, Sui, TypeScript, React" `
+    "Leadership, Management, Design, Development" `
     "August 2026" `
-    "Workshop participant learning Sui Move." `
-    "https://your-name.vercel.app" `
+    "Cryptita Plays Workshop participant learning Sui Move." `
+    "https://cryptita-plays-builder-workshop-eosin.vercel.app" `
   --gas-budget 10000000
 ```
 
@@ -430,7 +496,10 @@ Expected:
 
 ---
 
+
+
 ## Package ID vs Object ID
+
 
 | ID                     | When you get it               | Used for                                   |
 | ---------------------- | ----------------------------- | ------------------------------------------ |
@@ -438,65 +507,87 @@ Expected:
 | **Registry object ID** | Shared Cryptita registry      | First CLI arg (`&mut BuilderRegistry`)     |
 | **Object ID**          | `create_builder_card` success | `VITE_PORTFOLIO_OBJECT_ID` in the frontend |
 
+
 The website reads the **created BuilderCard object**, not the package.
 
 ---
 
+
+
 ## Environment variables
 
-| Variable                   | Purpose                                                                       |
-| -------------------------- | ----------------------------------------------------------------------------- |
-| `VITE_PORTFOLIO_OBJECT_ID` | Created BuilderCard object ID. Empty = placeholder card + grey status dot     |
+
+| Variable                   | Purpose                                                                        |
+| -------------------------- | ------------------------------------------------------------------------------ |
+| `VITE_PORTFOLIO_OBJECT_ID` | Created BuilderCard object ID. Empty = placeholder card + grey status dot      |
 | `VITE_SUI_NETWORK`         | `mainnet` for workshop production — selects GraphQL endpoint and NETWORK label |
-| `VITE_CHAIN`               | Visual chain theme (default `sui`)                                            |
+| `VITE_CHAIN`               | Visual chain theme (default `sui`)                                             |
+
 
 Vite inlines `VITE_*` at **build time**. After any `.env` change, rebuild and redeploy.
 
 ---
 
+
+
 ## Troubleshooting
+
+
 
 ### Sui CLI / gas
 
-| Error / symptom           | Likely cause                                               | Fix                                                              |
-| ------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------- |
-| `sui: command not found`  | CLI not installed or not on PATH                           | Reinstall from official docs; reopen terminal                  |
-| No gas / cannot find coin | SUI is in address balance, not a coin object               | Fund address; follow current Sui docs to convert balance → coin  |
-| Wrong network publish     | Active env is not mainnet                                  | `sui client switch --env mainnet` then republish                 |
-| Insufficient gas budget   | Budget too low                                             | Raise `--gas-budget` (e.g. `100000000` publish, `10000000` call) |
+
+| Error / symptom           | Likely cause                                 | Fix                                                              |
+| ------------------------- | -------------------------------------------- | ---------------------------------------------------------------- |
+| `sui: command not found`  | CLI not installed or not on PATH             | Reinstall from official docs; reopen terminal                    |
+| No gas / cannot find coin | SUI is in address balance, not a coin object | Fund address; follow current Sui docs to convert balance → coin  |
+| Wrong network publish     | Active env is not mainnet                    | `sui client switch --env mainnet` then republish                 |
+| Insufficient gas budget   | Budget too low                               | Raise `--gas-budget` (e.g. `100000000` publish, `10000000` call) |
+
+
 
 ### Publish / create
 
-| Error / symptom                             | Likely cause                                               | Fix                                                                       |
-| ------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------- |
-| Compile error in Move                       | Dependency / syntax issue                                  | Run `sui move build` and fix reported lines first                         |
-| `Move.lock` is a directory (Linux/macOS)    | Corrupt lock path                                          | `cd move && rm Move.lock && sui move build`                               |
-| `create_builder_card` arity / type mismatch | Wrong number or order of args                              | Use registry object + 12 strings; do **not** pass `builder_no`            |
-| Registry object not found / wrong type      | Wrong network registry ID                                  | Use the Mainnet ID on mainnet (see Step 7)                                |
-| Object created but Suiscan shows no link    | Forgot `website_url` or used trailing slash inconsistently | Pass clean HTTPS URL with no trailing slash; recreate card if needed      |
-| Old object missing `website_url`            | Object created with previous schema                        | Republish package and create a **new** card                               |
+
+| Error / symptom                             | Likely cause                                               | Fix                                                                  |
+| ------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------------- |
+| Compile error in Move                       | Dependency / syntax issue                                  | Run `sui move build` and fix reported lines first                    |
+| `Move.lock` is a directory (Linux/macOS)    | Corrupt lock path                                          | `cd move && rm Move.lock && sui move build`                          |
+| `create_builder_card` arity / type mismatch | Wrong number or order of args                              | Use registry object + 12 strings; do **not** pass `builder_no`       |
+| Registry object not found / wrong type      | Wrong network registry ID                                  | Use the Mainnet ID on mainnet (see Step 7)                           |
+| Object created but Suiscan shows no link    | Forgot `website_url` or used trailing slash inconsistently | Pass clean HTTPS URL with no trailing slash; recreate card if needed |
+| Old object missing `website_url`            | Object created with previous schema                        | Republish package and create a **new** card                          |
+
+
 
 ### Frontend
 
-| Error / symptom                     | Likely cause                                    | Fix                                                          |
-| ----------------------------------- | ----------------------------------------------- | ------------------------------------------------------------ |
-| Card stays empty / grey dot         | `VITE_PORTFOLIO_OBJECT_ID` empty or not rebuilt | Set object ID in `.env`, then restart `npm run dev` or rebuild |
-| Card error / “object not found”     | Wrong ID, wrong network, or typo                | Match `VITE_SUI_NETWORK=mainnet` to where the object exists  |
-| Env change ignored                  | Vite caches build-time env                      | Stop/restart `npm run dev`; for production, rebuild + redeploy |
-| Photo missing                       | File not at `web/public/assets/profile.png`     | Replace that exact path/filename and redeploy                |
-| Photo OK locally, broken on Suiscan | Site not deployed or wrong `website_url`        | Deploy site first; pass that URL as last create arg          |
+
+| Error / symptom                     | Likely cause                                    | Fix                                                                |
+| ----------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------ |
+| Card stays empty / grey dot         | `VITE_PORTFOLIO_OBJECT_ID` empty or not rebuilt | Set object ID in `.env`, then restart `npm run dev` or rebuild     |
+| Card error / “object not found”     | Wrong ID, wrong network, or typo                | Match `VITE_SUI_NETWORK=mainnet` to where the object exists        |
+| Env change ignored                  | Vite caches build-time env                      | Stop/restart `npm run dev`; for production, rebuild + redeploy     |
+| Photo missing                       | File not at `web/public/assets/profile.png`     | Replace that exact path/filename and redeploy                      |
+| Photo OK locally, broken on Suiscan | Site not deployed or wrong `website_url`        | Deploy site first; pass that URL as last create arg                |
 | Dot green but fields empty/error    | Object ID set but fetch failed                  | Check network, object type ends with `::builder_card::BuilderCard` |
+
+
 
 ### Reset / handoff
 
-| Goal                                | What to do                                                                             |
-| ----------------------------------- | -------------------------------------------------------------------------------------- |
-| Clear personal data from local site | Empty `VITE_PORTFOLIO_OBJECT_ID` in `web/.env`, restart dev server                     |
-| Prepare repo for next cohort        | Keep `.env.example` empty for that value; never commit `.env`                          |
-| Clear hosted site                   | Clear Vercel env vars → Redeploy                                                       |
-| Delete on-chain data                | Not possible — create a new object and point the site at it                            |
+
+| Goal                                | What to do                                                         |
+| ----------------------------------- | ------------------------------------------------------------------ |
+| Clear personal data from local site | Empty `VITE_PORTFOLIO_OBJECT_ID` in `web/.env`, restart dev server |
+| Prepare repo for next cohort        | Keep `.env.example` empty for that value; never commit `.env`      |
+| Clear hosted site                   | Clear Vercel env vars → Redeploy                                   |
+| Delete on-chain data                | Not possible — create a new object and point the site at it        |
+
 
 ---
+
+
 
 ## Optional Testnet practice
 
@@ -510,6 +601,8 @@ Use this only if you want extra practice **before** Mainnet workshop production:
 6. When ready for workshop production, switch to Mainnet, republish, recreate, set `VITE_SUI_NETWORK=mainnet`, update env, and redeploy.
 
 ---
+
+
 
 ## License
 
