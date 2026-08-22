@@ -115,7 +115,7 @@ export default function App() {
         }}
       >
         <CardPhotoExport portfolio={portfolio}>
-          {({ onCameraClick, isGenerating }) => (
+          {({ onCameraClick, isGenerating, canExport }) => (
             <div
               className="card-stage__scale-box"
               style={{
@@ -133,7 +133,11 @@ export default function App() {
                 <div className="card-scale">
                   <ProfileCard portfolio={portfolio} />
                 </div>
-                <SocialActions onCameraClick={onCameraClick} isGenerating={isGenerating} />
+                <SocialActions
+                  onCameraClick={onCameraClick}
+                  isGenerating={isGenerating}
+                  canExport={canExport}
+                />
               </div>
             </div>
           )}

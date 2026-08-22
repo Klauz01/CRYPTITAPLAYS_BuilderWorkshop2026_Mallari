@@ -78,7 +78,7 @@ Do **not** ship any of the following:
 | Proof-as-a-section | Object id lives on the card credential row only |
 | Wallet providers / dapp-kit | No write path from the hosted site |
 
-**Permitted interactions:** card flip, copy buttons (OBJECT ID, OWNER), outbound links (Sui, partners, socials, optional Suiscan on object id), header logo link.
+**Permitted interactions:** card flip, copy buttons (OBJECT ID, OWNER), outbound links (Sui, partners, socials, optional Suiscan on object id), header logo link, **Camera** (download builder card PNG).
 
 ---
 
@@ -247,6 +247,25 @@ Chip wrap at design size is acceptable; **layout must not change** on smaller vi
 | Valid `photo_url` | Load remote image; `object-fit: cover` |
 | Missing / broken URL | Neutral placeholder frame; no stock portrait of a real person |
 | Loading | Optional skeleton inside photo frame |
+
+### 4.8 Builder card photo export (Camera) `[LOCKED]`
+
+Product still (capability `09`). Homepage card is unchanged.
+
+| Rule | Value |
+| ---- | ----- |
+| Trigger | **Camera** button in `SocialActions` below the live `ProfileCard` |
+| Availability | Enabled only when `portfolio.status === 'success'`. **Do not** export empty/loading/error placeholders |
+| Output | One composite **PNG** download: `cryptita-builder-{slug}.png` |
+| Dimensions | **1080 × 1350 px** (4:5) — universal social post size; uniform scale only, no stretch |
+| Layout | Product still: **front above back**, both mildly **2D-tilted** (opposite directions), fitted inside the 4:5 frame |
+| Background | CSS **marble-like gradient** (no photo asset). **No** MoltenMetal, **no** card-material studio, **no** keychain |
+| Capture surface | Hidden off-screen `BuilderCardExport` studio (not the live flip card) |
+| Fields | Same mapping as the live card (`05` §15). **ISSUED** is the on-chain string as stored |
+| Success | Browser download starts; button shows generating state while capture runs |
+| Failure | Capture errors only: PNG with **Export failed** / *We couldn't export your Cryptita Plays Builder Card. Please try again.* |
+| Failure UI | Same message in an on-page toast (`role="alert"`) for ~8s or until dismissed |
+| Scope | Client-side only via `html-to-image`; no server, no wallet, no chain write |
 
 ---
 

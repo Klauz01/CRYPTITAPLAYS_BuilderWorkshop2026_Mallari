@@ -22,9 +22,6 @@ const BuilderCardExport = forwardRef<HTMLDivElement, BuilderCardExportProps>(
         data-export-root
       >
         <div className="builder-card-export__studio">
-          <div className="material-noise" aria-hidden="true" />
-          <div className="material-light" aria-hidden="true" />
-
           <div className="builder-card-export__cards">
             <div className="builder-card-export__card-wrap builder-card-export__card-wrap--front">
               <div className="builder-card-export__card-shell">

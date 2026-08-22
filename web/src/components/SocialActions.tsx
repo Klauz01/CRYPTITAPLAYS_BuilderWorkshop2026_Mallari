@@ -23,17 +23,29 @@ function CameraIcon() {
 type SocialActionsProps = {
   onCameraClick?: () => void;
   isGenerating?: boolean;
+  canExport?: boolean;
 };
 
-export default function SocialActions({ onCameraClick, isGenerating = false }: SocialActionsProps) {
+export default function SocialActions({
+  onCameraClick,
+  isGenerating = false,
+  canExport = false,
+}: SocialActionsProps) {
+  const cameraDisabled = isGenerating || !onCameraClick || !canExport;
+  const cameraLabel = isGenerating
+    ? 'Generating builder card photo'
+    : canExport
+      ? 'Download builder card photo'
+      : 'Download builder card photo (available after the card loads)';
+
   return (
     <div className="social-actions">
       <button
         type="button"
         className={`social-actions__link social-actions__camera${isGenerating ? ' is-generating' : ''}`}
-        aria-label={isGenerating ? 'Generating builder card photo' : 'Download builder card photo'}
+        aria-label={cameraLabel}
         aria-busy={isGenerating}
-        disabled={isGenerating || !onCameraClick}
+        disabled={cameraDisabled}
         onClick={onCameraClick}
       >
         <CameraIcon />

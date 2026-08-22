@@ -7,6 +7,7 @@ import '../styles/card-photo-export.css';
 type CardPhotoExportRenderProps = {
   onCameraClick: () => void;
   isGenerating: boolean;
+  canExport: boolean;
 };
 
 type CardPhotoExportProps = {
@@ -16,8 +17,9 @@ type CardPhotoExportProps = {
 
 export default function CardPhotoExport({ portfolio, children }: CardPhotoExportProps) {
   const builderName = portfolio.data?.fields.builder_name ?? 'builder';
+  const canExport = portfolio.status === 'success';
   const { captureRef, exportPhoto, isGenerating, exportError, clearExportError } =
-    useCardPhotoExport(builderName);
+    useCardPhotoExport(builderName, canExport);
 
   useEffect(() => {
     if (!exportError) return;
@@ -37,6 +39,7 @@ export default function CardPhotoExport({ portfolio, children }: CardPhotoExport
           void exportPhoto();
         },
         isGenerating,
+        canExport,
       })}
       {exportError ? (
         <div className="export-toast" role="alert" aria-live="assertive">

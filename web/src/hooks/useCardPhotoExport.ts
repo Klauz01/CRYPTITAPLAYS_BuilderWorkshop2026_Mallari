@@ -1,8 +1,17 @@
 import { useCallback, useRef, useState } from 'react';
+import {
+  EXPORT_BACKGROUND,
+  EXPORT_ERROR_BACKGROUND,
+  EXPORT_HEIGHT,
+  EXPORT_WIDTH,
+} from '../lib/cardPhotoExport';
 
 const EXPORT_ERROR_TITLE = 'Export failed';
 const EXPORT_ERROR_BODY =
   "We couldn't export your Cryptita Plays Builder Card. Please try again.";
+
+/** Supersample capture, then downscale for sharper social output. */
+const CAPTURE_PIXEL_RATIO = 2;
 
 function sanitizeFilename(name: string): string {
   const slug = name
@@ -41,6 +50,40 @@ async function waitForImages(node: HTMLElement): Promise<void> {
   );
 }
 
+function loadImage(dataUrl: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error('Could not load export image.'));
+    image.src = dataUrl;
+  });
+}
+
+function downscaleToSocialSize(dataUrl: string): Promise<string> {
+  return loadImage(dataUrl).then((image) => {
+    const canvas = document.createElement('canvas');
+
+    canvas.width = EXPORT_WIDTH;
+    canvas.height = EXPORT_HEIGHT;
+
+    const context = canvas.getContext('2d');
+
+    if (!context) {
+      throw new Error('Canvas is unavailable.');
+    }
+
+    context.fillStyle = EXPORT_BACKGROUND;
+    context.fillRect(0, 0, EXPORT_WIDTH, EXPORT_HEIGHT);
+
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = 'high';
+    context.drawImage(image, 0, 0, EXPORT_WIDTH, EXPORT_HEIGHT);
+
+    return canvas.toDataURL('image/png');
+  });
+}
+
 function downloadDataUrl(dataUrl: string, filename: string): void {
   const link = document.createElement('a');
 
@@ -53,12 +96,10 @@ function downloadDataUrl(dataUrl: string, filename: string): void {
 }
 
 function createExportErrorPng(): string {
-  const width = 1116;
-  const height = 640;
   const canvas = document.createElement('canvas');
 
-  canvas.width = width;
-  canvas.height = height;
+  canvas.width = EXPORT_WIDTH;
+  canvas.height = EXPORT_HEIGHT;
 
   const context = canvas.getContext('2d');
 
@@ -66,19 +107,19 @@ function createExportErrorPng(): string {
     return '';
   }
 
-  context.fillStyle = '#131318';
-  context.fillRect(0, 0, width, height);
+  context.fillStyle = EXPORT_ERROR_BACKGROUND;
+  context.fillRect(0, 0, EXPORT_WIDTH, EXPORT_HEIGHT);
 
   context.textAlign = 'center';
   context.textBaseline = 'middle';
 
   context.fillStyle = '#f4f4f4';
-  context.font = '700 42px Inter, ui-sans-serif, system-ui, sans-serif';
-  context.fillText(EXPORT_ERROR_TITLE, width / 2, height / 2 - 28);
+  context.font = '700 48px Inter, ui-sans-serif, system-ui, sans-serif';
+  context.fillText(EXPORT_ERROR_TITLE, EXPORT_WIDTH / 2, EXPORT_HEIGHT / 2 - 32);
 
   context.fillStyle = 'rgba(255, 255, 255, 0.62)';
-  context.font = '500 22px Inter, ui-sans-serif, system-ui, sans-serif';
-  context.fillText(EXPORT_ERROR_BODY, width / 2, height / 2 + 24);
+  context.font = '500 26px Inter, ui-sans-serif, system-ui, sans-serif';
+  context.fillText(EXPORT_ERROR_BODY, EXPORT_WIDTH / 2, EXPORT_HEIGHT / 2 + 28);
 
   return canvas.toDataURL('image/png');
 }
@@ -132,17 +173,21 @@ async function captureExportNode(node: HTMLElement): Promise<string> {
     await waitForImages(node);
     await document.fonts.ready;
 
-    return await toPng(node, {
-      pixelRatio: 2,
+    const supersampled = await toPng(node, {
+      width: EXPORT_WIDTH,
+      height: EXPORT_HEIGHT,
+      pixelRatio: CAPTURE_PIXEL_RATIO,
       cacheBust: true,
-      backgroundColor: '#131318',
+      backgroundColor: EXPORT_BACKGROUND,
     });
+
+    return await downscaleToSocialSize(supersampled);
   } finally {
     restoreCaptureStyles(node, styleSnapshot);
   }
 }
 
-export function useCardPhotoExport(builderName: string) {
+export function useCardPhotoExport(builderName: string, canExport: boolean) {
   const captureRef = useRef<HTMLDivElement>(null);
 
   const [isGenerating, setIsGenerating] = useState(false);
@@ -151,7 +196,7 @@ export function useCardPhotoExport(builderName: string) {
   const exportPhoto = useCallback(async () => {
     const node = captureRef.current;
 
-    if (!node || isGenerating) return;
+    if (!node || !canExport || isGenerating) return;
 
     setIsGenerating(true);
     setExportError(null);
@@ -179,7 +224,7 @@ export function useCardPhotoExport(builderName: string) {
     } finally {
       setIsGenerating(false);
     }
-  }, [builderName, isGenerating]);
+  }, [builderName, canExport, isGenerating]);
 
   const clearExportError = useCallback(() => {
     setExportError(null);

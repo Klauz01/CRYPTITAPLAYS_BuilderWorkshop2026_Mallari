@@ -51,6 +51,9 @@ There is no original test to clone. `[REPOSITORY]`
 | Scale-down | Narrow viewports shrink whole card via `transform: scale` — chips/type do not reflow to alternate layout `[LOCKED]` |
 | Browser zoom | Ctrl/Cmd +/- does not enlarge on-screen card past design cap (`visualViewport` compensation) `[LOCKED]` |
 | Footer links | Facebook and LinkedIn open Cryptita URLs from `03` |
+| Camera export | After a successful object load, click **Camera** → PNG downloads at **1080×1350** (4:5): tilted front above tilted back on marble-like gradient; no keychain |
+| Camera gated | Camera is disabled while status is empty, loading, or error — no placeholder PNG |
+| Camera export failure | If capture fails, downloaded PNG shows **Export failed** message; on-page toast appears with same copy |
 
 **Removed checks (do not verify — out of scope v1):** Connect Wallet, disconnect, wallet modal, wrong-network wallet warning, create form, browser PTB, `signAndExecuteTransaction`, `useCreatePortfolio`. `[LOCKED]`
 
