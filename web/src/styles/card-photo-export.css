@@ -133,7 +133,7 @@
     0 10px 20px rgba(40, 32, 24, 0.16);
 }
 
-/* Reflective light-catch border */
+/* Reflective light-catch border — uses same chain primary as front card text */
 .builder-card-export__card-wrap::before {
   content: '';
   position: absolute;
@@ -143,11 +143,11 @@
   padding: 1.5px;
   background: linear-gradient(
     148deg,
-    rgba(255, 255, 255, 0.88) 0%,
-    rgba(255, 255, 255, 0.18) 22%,
-    rgba(140, 180, 255, 0.06) 48%,
-    rgba(255, 255, 255, 0.04) 68%,
-    rgba(255, 210, 150, 0.55) 100%
+    rgba(var(--chain-primary-rgb), 0.95) 0%,
+    rgba(var(--chain-primary-rgb), 0.28) 22%,
+    rgba(var(--chain-primary-rgb), 0.08) 48%,
+    rgba(var(--chain-primary-rgb), 0.05) 68%,
+    rgba(var(--chain-primary-rgb), 0.72) 100%
   );
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
@@ -163,22 +163,22 @@
 .builder-card-export__card-wrap--front::before {
   background: linear-gradient(
     152deg,
-    rgba(255, 255, 255, 0.92) 0%,
-    rgba(255, 255, 255, 0.14) 24%,
-    rgba(120, 170, 255, 0.05) 52%,
-    rgba(255, 255, 255, 0.03) 72%,
-    rgba(255, 200, 130, 0.5) 100%
+    var(--chain-primary) 0%,
+    rgba(var(--chain-primary-rgb), 0.22) 24%,
+    rgba(var(--chain-primary-rgb), 0.06) 52%,
+    rgba(var(--chain-primary-rgb), 0.04) 72%,
+    rgba(var(--chain-primary-rgb), 0.68) 100%
   );
 }
 
 .builder-card-export__card-wrap--back::before {
   background: linear-gradient(
     128deg,
-    rgba(255, 255, 255, 0.78) 0%,
-    rgba(200, 220, 255, 0.12) 20%,
-    rgba(255, 255, 255, 0.04) 55%,
-    rgba(100, 160, 255, 0.08) 78%,
-    rgba(255, 220, 170, 0.48) 100%
+    rgba(var(--chain-primary-rgb), 0.88) 0%,
+    rgba(var(--chain-primary-rgb), 0.18) 20%,
+    rgba(var(--chain-primary-rgb), 0.05) 55%,
+    rgba(var(--chain-primary-rgb), 0.12) 78%,
+    rgba(var(--chain-primary-rgb), 0.62) 100%
   );
 }
 
