@@ -38,6 +38,9 @@ public struct BuilderCard has key, store {
     skills: String,
     issued: String,
     about: String,
+    /// Deployed workshop site URL (shown on Suiscan as link).
+    website_url: String,
+    /// Derived at create time: `{website_url}/assets/profile.png` for explorers.
     photo_url: String,
 }
 
@@ -66,6 +69,7 @@ fun init(
         string::utf8(b"community"),
         string::utf8(b"skills"),
         string::utf8(b"issued"),
+        string::utf8(b"link"),
     ];
 
     let values = vector[
@@ -98,6 +102,8 @@ fun init(
         string::utf8(b"{skills}"),
 
         string::utf8(b"{issued}"),
+
+        string::utf8(b"{website_url}"),
     ];
 
     let mut display = display::new_with_fields<BuilderCard>(
@@ -120,6 +126,14 @@ fun init(
     );
 }
 
+/// Builds the public profile image URL from the deployed site root.
+fun profile_photo_url(website_url: &String): String {
+    let mut photo_url = string::utf8(b"");
+    string::append_utf8(&mut photo_url, *string::as_bytes(website_url));
+    string::append(&mut photo_url, string::utf8(b"/assets/profile.png"));
+    photo_url
+}
+
 /// Creates the participant's BuilderCard.
 ///
 /// Builder number is automatically claimed from the shared
@@ -138,10 +152,11 @@ public fun create_builder_card(
     skills: String,
     issued: String,
     about: String,
-    photo_url: String,
+    website_url: String,
     ctx: &mut TxContext,
 ) {
     let builder_no = claim_builder_number(registry);
+    let photo_url = profile_photo_url(&website_url);
 
     let card = BuilderCard {
         id: object::new(ctx),
@@ -157,6 +172,7 @@ public fun create_builder_card(
         skills,
         issued,
         about,
+        website_url,
         photo_url,
     };
 

@@ -56,6 +56,7 @@ export function mapBuilderCard(
     skills: toString(fields.skills),
     issued: toString(fields.issued),
     about: toString(fields.about),
+    website_url: toString(fields.website_url),
     photo_url: toString(fields.photo_url),
   };
 

@@ -80,7 +80,7 @@ Use **thirteen string arguments** in this exact order:
 10. `skills` (comma-separated)
 11. `issued`
 12. `about` (stored on-chain, **not shown** on the website)
-13. `photo_url`
+13. `website_url` (deployed site URL — shown on Suiscan as link; profile photo is always `web/public/assets/profile.png` on the site)
 
 #### Bash / macOS / Git Bash
 
@@ -102,7 +102,7 @@ sui client call \
     "Move, Sui, TypeScript, React" \
     "August 2026" \
     "Workshop participant learning Sui Move." \
-    "https://example.com/photos/alex.jpg" \
+    "https://your-site.vercel.app" \
   --gas-budget 10000000
 ```
 
@@ -113,7 +113,7 @@ sui client call `
   --package 0xPACKAGE_ID `
   --module builder_card `
   --function create_builder_card `
-  --args "Alex Rivera" "BP-042" "Smart Contract Developer" "Cryptita Build & Deploy 2026" "Philippines" "DeFi Protocols" "2024" "Move on Sui" "Cryptita Plays" "Move, Sui, TypeScript, React" "August 2026" "Workshop participant learning Sui Move." "https://example.com/photos/alex.jpg" `
+  --args "Alex Rivera" "BP-042" "Smart Contract Developer" "Cryptita Build & Deploy 2026" "Philippines" "DeFi Protocols" "2024" "Move on Sui" "Cryptita Plays" "Move, Sui, TypeScript, React" "August 2026" "Workshop participant learning Sui Move." "https://your-site.vercel.app" `
   --gas-budget 10000000
 ```
 
@@ -158,7 +158,14 @@ npm run build
 npm run preview
 ```
 
-An **empty** `VITE_PORTFOLIO_OBJECT_ID` is valid: the site builds and shows empty/placeholder card states without calling RPC.
+An **empty** `VITE_PORTFOLIO_OBJECT_ID` is valid: the site builds and shows empty/placeholder card states without calling RPC. The profile photo always loads from `web/public/assets/profile.png` — replace that file with your portrait before deploy (same filename).
+
+### Profile photo (local file)
+
+1. Replace `web/public/assets/profile.png` with your photo (keep the filename).
+2. Deploy the site (e.g. Vercel) and note your HTTPS URL.
+3. Pass that URL as the **last CLI argument** (`website_url`) when calling `create_builder_card`.
+4. Suiscan will show your site link and derive the public image URL as `{website_url}/assets/profile.png`.
 
 ### After create
 

@@ -1,5 +1,6 @@
 import { siSui } from '../lib/brandIcons';
-import { suiscanObjectUrl } from '../config';
+import { objectId as configuredObjectId, suiscanObjectUrl } from '../config';
+import { PROFILE_PHOTO_PATH } from '../lib/profilePhoto';
 import type { UsePortfolioResult } from '../types';
 import BrandIcon from './BrandIcon';
 
@@ -15,6 +16,7 @@ export function displayOrPlaceholder(value: string | undefined, placeholder: str
 
 type CardFaceProps = {
   portfolio: UsePortfolioResult;
+  photoSrc?: string;
   showPhoto: boolean;
   onPhotoError?: () => void;
   forcePhotoFallback?: boolean;
@@ -27,6 +29,7 @@ type CardFaceProps = {
 
 export function CardFrontFace({
   portfolio,
+  photoSrc = PROFILE_PHOTO_PATH,
   showPhoto,
   onPhotoError,
   forcePhotoFallback = false,
@@ -38,11 +41,11 @@ export function CardFrontFace({
   const fields = data?.fields;
   const builderName = fields?.builder_name ?? '';
   const builderNo = fields?.builder_no ?? '';
-  const photoUrl = fields?.photo_url ?? '';
   const objectId = data?.objectId ?? '';
   const owner = data?.owner ?? '';
   const network = data?.networkLabel ?? '—';
   const issued = fields?.issued ?? '—';
+  const isActive = Boolean(configuredObjectId);
 
   const placeholderName =
     status === 'loading' ? 'Loading on-chain profile…' : 'Builder name';
@@ -72,6 +75,11 @@ export function CardFrontFace({
           <span className="builder-number-label">BUILDER NO.</span>
           <div className="builder-number-value">
             <strong>{displayOrPlaceholder(builderNo, placeholderField)}</strong>
+            <span
+              className={`builder-status-dot${isActive ? ' builder-status-dot--active' : ''}`}
+              aria-label={isActive ? 'On-chain profile active' : 'On-chain profile not configured'}
+              title={isActive ? 'On-chain profile active' : 'Set VITE_PORTFOLIO_OBJECT_ID to activate'}
+            />
           </div>
         </div>
       </div>
@@ -80,7 +88,7 @@ export function CardFrontFace({
         <div className="profile-photo-wrap">
           {renderPhoto ? (
             <img
-              src={photoUrl}
+              src={photoSrc}
               alt={builderName || 'Builder profile photo'}
               className="profile-photo"
               {...(photoCrossOrigin ? { crossOrigin: 'anonymous' as const } : {})}

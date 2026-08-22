@@ -363,7 +363,7 @@ opacity: 0.26;
 
 .builder-number-value {
   display: flex;
-  align-items: baseline;
+  align-items: center;
 
   gap: 4px;
 }
@@ -379,6 +379,28 @@ opacity: 0.26;
   letter-spacing: 0.12em;
 
   font-variant-numeric: tabular-nums;
+}
+
+.builder-status-dot {
+  flex-shrink: 0;
+
+  width: 10px;
+  height: 10px;
+
+  margin-left: 6px;
+  margin-bottom: 4px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.builder-status-dot--active {
+  background: #3ecf6e;
+  box-shadow:
+    0 0 0 2px rgba(62, 207, 110, 0.2),
+    0 0 10px rgba(62, 207, 110, 0.45);
 }
 
 
