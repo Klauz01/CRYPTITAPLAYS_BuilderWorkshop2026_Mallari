@@ -489,7 +489,7 @@ Wraps the live card stack; mounts hidden `BuilderCardExport` and wires Camera to
 | | |
 | - | - |
 | **Purpose** | Off-screen export studio for PNG capture |
-| **Layout** | Product still: front above back, opposite 2D tilts, CSS marble-like gradient; **no** keychain |
+| **Layout** | Product still: front above back, opposite 2D tilts, stylized gradient + pattern; **no** keychain |
 | **Availability** | Camera disabled unless `portfolio.status === 'success'` |
 | **Dimensions** | Fixed **1080 × 1350 px** frame (4:5); cards scaled uniformly from 1020px design width |
 | **Library** | `html-to-image` (`toPng`, 2× supersample → downscale to 1080×1350) |

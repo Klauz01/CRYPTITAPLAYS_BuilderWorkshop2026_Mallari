@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useCallback, useRef } from 'react';
 import { PROFILE_PHOTO_PATH } from '../lib/profilePhoto';
 import type { UsePortfolioResult } from '../types';
 import { CardBackFace, CardFrontFace } from './ProfileCardFaces';
@@ -14,14 +14,53 @@ const BuilderCardExport = forwardRef<HTMLDivElement, BuilderCardExportProps>(
     const { status } = portfolio;
     const showPhoto = status !== 'error';
 
+    const rootRef = useRef<HTMLDivElement | null>(null);
+    const prismReadyRef = useRef(false);
+    const raysReadyRef = useRef(false);
+
+    const checkBothReady = useCallback(() => {
+      if (prismReadyRef.current && raysReadyRef.current) {
+        const node = rootRef.current;
+        if (node) node.dataset.webglReady = 'true';
+      }
+    }, []);
+
+    const handlePrismReady = useCallback(() => {
+      prismReadyRef.current = true;
+      checkBothReady();
+    }, [checkBothReady]);
+
+    const handleRaysReady = useCallback(() => {
+      raysReadyRef.current = true;
+      checkBothReady();
+    }, [checkBothReady]);
+
+    const setRefs = useCallback(
+      (node: HTMLDivElement | null) => {
+        rootRef.current = node;
+        if (typeof ref === 'function') {
+          ref(node);
+        } else if (ref) {
+          ref.current = node;
+        }
+      },
+      [ref],
+    );
+
     return (
       <div
-        ref={ref}
+        ref={setRefs}
         className="builder-card-export"
         aria-hidden="true"
         data-export-root
       >
         <div className="builder-card-export__studio">
+          <div className="builder-card-export__surface" aria-hidden="true">
+            <div className="builder-card-export__surface-wash" />
+            <div className="builder-card-export__surface-vein" />
+          </div>
+
+
           <div className="builder-card-export__cards">
             <div className="builder-card-export__card-wrap builder-card-export__card-wrap--front">
               <div className="builder-card-export__card-shell">
@@ -40,6 +79,7 @@ const BuilderCardExport = forwardRef<HTMLDivElement, BuilderCardExportProps>(
               </div>
             </div>
           </div>
+
         </div>
       </div>
     );

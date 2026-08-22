@@ -259,7 +259,7 @@ Product still (capability `09`). Homepage card is unchanged.
 | Output | One composite **PNG** download: `cryptita-builder-{slug}.png` |
 | Dimensions | **1080 × 1350 px** (4:5) — universal social post size; uniform scale only, no stretch |
 | Layout | Product still: **front above back**, both mildly **2D-tilted** (opposite directions), fitted inside the 4:5 frame |
-| Background | CSS **marble-like gradient** (no photo asset). **No** MoltenMetal, **no** card-material studio, **no** keychain |
+| Background | CSS **stylized gradient + pattern** (diamond grid, dots, veins; no photo asset). **No** MoltenMetal, **no** card-material studio, **no** keychain |
 | Capture surface | Hidden off-screen `BuilderCardExport` studio (not the live flip card) |
 | Fields | Same mapping as the live card (`05` §15). **ISSUED** is the on-chain string as stored |
 | Success | Browser download starts; button shows generating state while capture runs |

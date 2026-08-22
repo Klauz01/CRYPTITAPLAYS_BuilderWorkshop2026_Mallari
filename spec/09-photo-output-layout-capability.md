@@ -8,7 +8,7 @@
 
 ## CAPABILITY
 
-A workshop visitor whose `BuilderCard` has loaded can click **Camera** and download one **1080×1350 (4:5)** PNG: a product still of the **front face above the back face**, both slightly tilted, on a **CSS marble-like gradient**. All personal and on-chain fields come from the same `usePortfolio` / `BuilderCard` data as the live homepage card. Workshop chrome (wordmark, four partners, Sui lockup) stays static. There is **no keychain**.
+A workshop visitor whose `BuilderCard` has loaded can click **Camera** and download one **1080×1350 (4:5)** PNG: a product still of the **front face above the back face**, both slightly tilted, on a **stylized CSS gradient with a repeating pattern** (diamond grid, dots, veins). All personal and on-chain fields come from the same `usePortfolio` / `BuilderCard` data as the live homepage card. Workshop chrome (wordmark, four partners, Sui lockup) stays static. There is **no keychain**.
 
 ---
 
@@ -29,7 +29,7 @@ A workshop visitor whose `BuilderCard` has loaded can click **Camera** and downl
 | Realism | **Flat composite** — same layout as the mock (stack + tilt). Not photoreal 3D. |
 | Frame | **1080 × 1350 (4:5)**; still fitted inside, uniform card scale, no stretch. |
 | Keychain | **Removed entirely.** |
-| Marble | **CSS marble-like gradient** — no photo asset. |
+| Marble | **Stylized CSS gradient + pattern** — no photo asset. |
 | Empty / loading / error | Camera **disabled**. Do not export placeholder identity. |
 | Partners | All **four** (Devcon Laguna, AWS/UPHSL, Gran:iX, Kamiyon) — same back face as the live card. |
 | ISSUED | Keep the existing credential-row field. Display the on-chain `issued` **string as stored**. Do not add a date parser or ISO formatter. |

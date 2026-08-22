@@ -55,7 +55,7 @@ Repo audited against this checklist. Checkboxes below reflect **current codebase
 - [x] Card scale wrapper: `transform: scale()` at narrow viewports; cap ~1020px; `visualViewport` counter-zoom. `[LOCKED]`
 - [x] Copy static partner SVGs to `web/public/assets/` (not `public/profile.png` as photo source). `[LOCKED]`
 - [x] **Do not scaffold:** `WalletBar`, `Hero`, `AboutSkills`, `Learn`, `CreateForm`, `Proof` section, wallet connect UI. `[REMOVE]`
-- [x] **Camera** export: `SocialActions` button downloads one composite PNG (tilted front + back on marble-like gradient; no keychain) via hidden `BuilderCardExport` + `html-to-image` (see `03` §4.8 / `09`)
+- [x] **Camera** export: `SocialActions` button downloads one composite PNG (tilted front + back on stylized gradient + pattern; no keychain) via hidden `BuilderCardExport` + `html-to-image` (see `03` §4.8 / `09`)
 - [x] Export output is **1080 × 1350 px** (4:5 social post size); cards scaled uniformly, no distortion
 - [x] Camera disabled until `portfolio.status === 'success'` (no placeholder export)
 - [x] Export failure downloads error PNG + shows on-page toast (no silent black image)
