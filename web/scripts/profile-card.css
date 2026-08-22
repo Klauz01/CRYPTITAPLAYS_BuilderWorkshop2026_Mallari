@@ -151,8 +151,8 @@ opacity: 0.26;
     Use the SVG as a transparency mask.
   */
 
-  -webkit-mask-image: url("/assets/cryptita.svg");
-  mask-image: url("/assets/cryptita.svg");
+  -webkit-mask-image: url("/assets/icon/cryptita.svg");
+  mask-image: url("/assets/icon/cryptita.svg");
 
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
@@ -915,10 +915,10 @@ opacity: 0.26;
   inset: 0;
 
   -webkit-mask-image:
-    url("/assets/cryptita.svg");
+    url("/assets/icon/cryptita.svg");
 
   mask-image:
-    url("/assets/cryptita.svg");
+    url("/assets/icon/cryptita.svg");
 
   -webkit-mask-repeat:
     no-repeat;

@@ -57,6 +57,7 @@ Dev server: Vite default port **5173**, `host: true`. `[RECOMMENDATION]`
 | `vite`, `@vitejs/plugin-react`, `typescript` | Build |
 | `@mysten/sui` | `SuiClient` + `getObject` only |
 | `ogl` | MoltenMetal WebGL renderer |
+| `html-to-image` | Client-side PNG export for Camera button |
 
 Pin `@mysten/sui` to the version recommended in official Sui docs on scaffold day. Use `getFullnodeUrl('mainnet')` (or current equivalent) in `suiClient.ts`.
 
@@ -103,15 +104,21 @@ web/
     │   ├── MoltenMetal.css
     │   ├── Header.tsx
     │   ├── Footer.tsx
-    │   └── ProfileCard.tsx
+    │   ├── ProfileCard.tsx
+    │   ├── ProfileCardFaces.tsx
+    │   ├── SocialActions.tsx
+    │   ├── CardPhotoExport.tsx
+    │   └── BuilderCardExport.tsx
     ├── hooks/
-    │   └── usePortfolio.ts            # read-only; name kept for workshop continuity
+    │   ├── usePortfolio.ts            # read-only; name kept for workshop continuity
+    │   └── useCardPhotoExport.ts      # html-to-image capture + error PNG fallback
     ├── lib/
     │   ├── suiClient.ts               # singleton SuiClient
     │   └── mapBuilderCard.ts          # fields + derived credentials → view model
     └── styles/
         ├── global.css                 # 100dvh shell, header/footer, main stage
-        └── profile-card.css           # ported from root style.css (card only)
+        ├── profile-card.css           # ported from root style.css (card only)
+        └── card-photo-export.css      # hidden export studio + export error toast
 ```
 
 **Do not scaffold:** `WalletBar`, `Hero`, `AboutSkills`, `Learn`, `CreateForm`, `Proof`, `useCreatePortfolio`, `public/profile.png` as data source. `[REMOVE]`
@@ -464,6 +471,32 @@ OBJECT ID text or adjacent control may link to `suiscanObjectUrl(objectId)`.
 
 - Success: `` `${builder_name} · Cryptita Plays` ``
 - Otherwise: `Cryptita Plays — Builder Workshop`
+
+### 14.5 `SocialActions.tsx` + card photo export
+
+| | |
+| - | - |
+| **Purpose** | Social links row below the card + **Camera** download control |
+| **Camera** | Calls `exportPhoto` via `CardPhotoExport`; disabled unless `portfolio.status === 'success'` |
+| **Generating** | Disables Camera button; `aria-busy` while capture runs |
+
+#### `CardPhotoExport.tsx`
+
+Wraps the live card stack; mounts hidden `BuilderCardExport` and wires Camera to `exportPhoto`. Shows export-error toast on failure.
+
+#### `BuilderCardExport.tsx` + `useCardPhotoExport.ts`
+
+| | |
+| - | - |
+| **Purpose** | Off-screen export studio for PNG capture |
+| **Layout** | Product still: front above back, opposite 2D tilts, stylized gradient + pattern; **no** keychain |
+| **Availability** | Camera disabled unless `portfolio.status === 'success'` |
+| **Dimensions** | Fixed **1080 × 1350 px** frame (4:5); cards scaled uniformly from 1020px design width |
+| **Library** | `html-to-image` (`toPng`, 2× supersample → downscale to 1080×1350) |
+| **Capture** | Temporarily moves export root to viewport during capture (avoids blank/black exports) |
+| **Success** | `cryptita-builder-{slug}.png` download |
+| **Failure** | Download error PNG with fixed message; toast mirrors copy from `03` §4.8 |
+| **Blockchain** | None — reads same `usePortfolio()` data as live card |
 
 ---
 

@@ -12,6 +12,7 @@ export type BuilderCardFields = {
   skills: string;
   issued: string;
   about: string;
+  website_url: string;
   photo_url: string;
 };
 

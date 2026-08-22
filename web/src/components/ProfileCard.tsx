@@ -1,4 +1,5 @@
 import { useCallback, useState, type KeyboardEvent, type MouseEvent } from 'react';
+import { PROFILE_PHOTO_PATH } from '../lib/profilePhoto';
 import type { UsePortfolioResult } from '../types';
 import { CardBackFace, CardFrontFace } from './ProfileCardFaces';
 import '../styles/profile-card.css';
@@ -8,13 +9,11 @@ type ProfileCardProps = {
 };
 
 export default function ProfileCard({ portfolio }: ProfileCardProps) {
-  const { status, data } = portfolio;
   const [isFlipped, setIsFlipped] = useState(false);
   const [photoBroken, setPhotoBroken] = useState(false);
   const [copiedField, setCopiedField] = useState<'objectId' | 'owner' | null>(null);
 
-  const photoUrl = data?.fields.photo_url ?? '';
-  const showPhoto = Boolean(photoUrl) && !photoBroken && status === 'success';
+  const showPhoto = !photoBroken;
 
   const handleCardClick = (event: MouseEvent<HTMLDivElement>) => {
     if ((event.target as HTMLElement).closest('a, button')) {
@@ -85,6 +84,7 @@ export default function ProfileCard({ portfolio }: ProfileCardProps) {
 
         <CardFrontFace
           portfolio={portfolio}
+          photoSrc={PROFILE_PHOTO_PATH}
           showPhoto={showPhoto}
           onPhotoError={() => setPhotoBroken(true)}
           copiedField={copiedField}

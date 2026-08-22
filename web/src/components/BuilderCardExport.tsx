@@ -1,4 +1,5 @@
-import { forwardRef } from 'react';
+import { forwardRef, useCallback, useRef } from 'react';
+import { PROFILE_PHOTO_PATH } from '../lib/profilePhoto';
 import type { UsePortfolioResult } from '../types';
 import { CardBackFace, CardFrontFace } from './ProfileCardFaces';
 import '../styles/profile-card.css';
@@ -6,48 +7,79 @@ import '../styles/card-photo-export.css';
 
 type BuilderCardExportProps = {
   portfolio: UsePortfolioResult;
-  forcePhotoFallback?: boolean;
 };
 
 const BuilderCardExport = forwardRef<HTMLDivElement, BuilderCardExportProps>(
-  function BuilderCardExport({ portfolio, forcePhotoFallback = false }, ref) {
-    const { status, data } = portfolio;
-    const photoUrl = data?.fields.photo_url ?? '';
-    const showPhoto = Boolean(photoUrl) && status === 'success' && !forcePhotoFallback;
+  function BuilderCardExport({ portfolio }, ref) {
+    const { status } = portfolio;
+    const showPhoto = status !== 'error';
+
+    const rootRef = useRef<HTMLDivElement | null>(null);
+    const prismReadyRef = useRef(false);
+    const raysReadyRef = useRef(false);
+
+    const checkBothReady = useCallback(() => {
+      if (prismReadyRef.current && raysReadyRef.current) {
+        const node = rootRef.current;
+        if (node) node.dataset.webglReady = 'true';
+      }
+    }, []);
+
+    const handlePrismReady = useCallback(() => {
+      prismReadyRef.current = true;
+      checkBothReady();
+    }, [checkBothReady]);
+
+    const handleRaysReady = useCallback(() => {
+      raysReadyRef.current = true;
+      checkBothReady();
+    }, [checkBothReady]);
+
+    const setRefs = useCallback(
+      (node: HTMLDivElement | null) => {
+        rootRef.current = node;
+        if (typeof ref === 'function') {
+          ref(node);
+        } else if (ref) {
+          ref.current = node;
+        }
+      },
+      [ref],
+    );
 
     return (
       <div
-        ref={ref}
+        ref={setRefs}
         className="builder-card-export"
         aria-hidden="true"
         data-export-root
       >
         <div className="builder-card-export__studio">
-          <header className="builder-card-export__header">
-            <h2>CRYPTITA PLAYS</h2>
-            <p>BUILDER WORKSHOP 2026</p>
-          </header>
+          <div className="builder-card-export__surface" aria-hidden="true">
+            <div className="builder-card-export__surface-wash" />
+            <div className="builder-card-export__surface-vein" />
+          </div>
+
 
           <div className="builder-card-export__cards">
-            <div className="builder-card-export__back-wrap">
-              <div className="builder-card-export__card-shell">
-                <CardBackFace portfolio={portfolio} backFaceTabIndex={-1} backFaceAriaHidden />
-              </div>
-            </div>
-
-            <div className="builder-card-export__front-wrap">
+            <div className="builder-card-export__card-wrap builder-card-export__card-wrap--front">
               <div className="builder-card-export__card-shell">
                 <CardFrontFace
                   portfolio={portfolio}
+                  photoSrc={PROFILE_PHOTO_PATH}
                   showPhoto={showPhoto}
-                  forcePhotoFallback={forcePhotoFallback}
                   photoCrossOrigin
                 />
               </div>
             </div>
+
+            <div className="builder-card-export__card-wrap builder-card-export__card-wrap--back">
+              <div className="builder-card-export__card-shell">
+                <CardBackFace portfolio={portfolio} backFaceTabIndex={-1} backFaceAriaHidden />
+              </div>
+            </div>
           </div>
 
-          <footer className="builder-card-export__footer">PROOF OF LEARNING &amp; BUILDING</footer>
         </div>
       </div>
     );

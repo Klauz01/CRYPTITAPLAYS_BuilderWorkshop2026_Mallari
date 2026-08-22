@@ -222,7 +222,7 @@ button {
     transform 160ms ease;
 }
 
-.social-actions__link:hover {
+.social-actions__link:hover:not(:disabled) {
   border-color: rgba(var(--chain-primary-rgb), 0.45);
   background: rgba(var(--chain-primary-rgb), 0.08);
   transform: translateY(-1px);
@@ -241,17 +241,8 @@ button {
 }
 
 .social-actions__camera {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 44px;
-  padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
-  color: rgba(255, 255, 255, 0.9);
-  background: rgba(255, 255, 255, 0.04);
   cursor: pointer;
+  color: rgba(255, 255, 255, 0.9);
   transition:
     border-color 160ms ease,
     background 160ms ease,
@@ -277,9 +268,4 @@ button {
 .social-actions__camera.is-generating {
   color: var(--chain-primary);
   border-color: rgba(var(--chain-primary-rgb), 0.35);
-}
-
-.social-actions__camera:focus-visible {
-  outline: 2px solid var(--chain-primary);
-  outline-offset: 2px;
 }

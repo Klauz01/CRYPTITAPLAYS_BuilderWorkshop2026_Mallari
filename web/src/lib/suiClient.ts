@@ -1,7 +1,8 @@
-import { SuiJsonRpcClient } from '@mysten/sui/jsonRpc';
-import { rpcUrl } from '../config';
+import { SuiGraphQLClient } from '@mysten/sui/graphql';
 
-export const suiClient = new SuiJsonRpcClient({
-  url: rpcUrl,
-  network: 'mainnet',
+import { graphqlUrl, network } from '../config';
+
+export const suiClient = new SuiGraphQLClient({
+  url: graphqlUrl,
+  network,
 });

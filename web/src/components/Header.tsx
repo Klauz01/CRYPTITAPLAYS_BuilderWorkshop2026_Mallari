@@ -17,7 +17,7 @@ const Header = forwardRef<HTMLElement>(function Header(_props, ref) {
       >
         <img
           className="site-header__logo"
-          src="/assets/cryptita-long.svg"
+          src="/assets/icon/cryptita-long.svg"
           alt="Cryptita Plays"
         />
       </a>

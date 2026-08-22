@@ -1,11 +1,11 @@
-import { siFacebook, siLinkedin } from '../lib/brandIcons';
+import { siFacebook, siInstagram, siLinkedin, siX } from '../lib/brandIcons';
 import BrandIcon from './BrandIcon';
 
 function CameraIcon() {
   return (
     <svg
-      width={20}
-      height={20}
+      width={18}
+      height={18}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -23,11 +23,34 @@ function CameraIcon() {
 type SocialActionsProps = {
   onCameraClick?: () => void;
   isGenerating?: boolean;
+  canExport?: boolean;
 };
 
-export default function SocialActions({ onCameraClick, isGenerating = false }: SocialActionsProps) {
+export default function SocialActions({
+  onCameraClick,
+  isGenerating = false,
+  canExport = false,
+}: SocialActionsProps) {
+  const cameraDisabled = isGenerating || !onCameraClick || !canExport;
+  const cameraLabel = isGenerating
+    ? 'Generating builder card photo'
+    : canExport
+      ? 'Download builder card photo'
+      : 'Download builder card photo (available after the card loads)';
+
   return (
     <div className="social-actions">
+      <button
+        type="button"
+        className={`social-actions__link social-actions__camera${isGenerating ? ' is-generating' : ''}`}
+        aria-label={cameraLabel}
+        aria-busy={isGenerating}
+        disabled={cameraDisabled}
+        onClick={onCameraClick}
+      >
+        <CameraIcon />
+        <span className="social-actions__label">Camera</span>
+      </button>
       <a
         className="social-actions__link"
         href="https://www.facebook.com/cryptitaplays"
@@ -38,16 +61,16 @@ export default function SocialActions({ onCameraClick, isGenerating = false }: S
         <BrandIcon icon={siFacebook} size={18} decorative />
         <span className="social-actions__label">Facebook</span>
       </a>
-      <button
-        type="button"
-        className={`social-actions__camera${isGenerating ? ' is-generating' : ''}`}
-        aria-label={isGenerating ? 'Generating builder card photo' : 'Download builder card photo'}
-        aria-busy={isGenerating}
-        disabled={isGenerating || !onCameraClick}
-        onClick={onCameraClick}
+      <a
+        className="social-actions__link"
+        href="https://x.com/cryptitaplays"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Cryptita Plays on X"
       >
-        <CameraIcon />
-      </button>
+        <BrandIcon icon={siX} size={18} decorative />
+        <span className="social-actions__label">X</span>
+      </a>
       <a
         className="social-actions__link"
         href="https://www.linkedin.com/company/cryptitaplays/"
@@ -57,6 +80,16 @@ export default function SocialActions({ onCameraClick, isGenerating = false }: S
       >
         <BrandIcon icon={siLinkedin} size={18} decorative />
         <span className="social-actions__label">LinkedIn</span>
+      </a>
+      <a
+        className="social-actions__link"
+        href="https://www.instagram.com/cryptitaplays/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Cryptita Plays on Instagram"
+      >
+        <BrandIcon icon={siInstagram} size={18} decorative />
+        <span className="social-actions__label">Instagram</span>
       </a>
     </div>
   );
