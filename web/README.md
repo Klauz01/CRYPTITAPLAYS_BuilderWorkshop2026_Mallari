@@ -1,32 +1,35 @@
-# React + TypeScript + Vite
+# Cryptita Plays — Builder Workshop (frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Read-only Vite + React homepage for the workshop `BuilderCard`.
 
-Currently, two official plugins are available:
+This folder is the **static site**. On-chain writes happen with the **Sui CLI** in `../move/`, not in the browser.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Scripts
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run lint     # oxlint
+npm run build    # tsc -b && vite build → dist/
+npm run preview  # serve dist/
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Configure
+
+Copy `.env.example` to `.env`:
+
+```env
+VITE_PORTFOLIO_OBJECT_ID=
+VITE_SUI_NETWORK=testnet
+VITE_CHAIN=sui
+```
+
+- Empty `VITE_PORTFOLIO_OBJECT_ID` is valid (placeholder card + grey status dot).
+- After `create_builder_card`, paste the **created object ID** and rebuild. Vite inlines `VITE_*` at build time.
+- Replace `public/assets/profile.png` with your portrait (keep the filename).
+
+## Deploy
+
+Vercel: **Root Directory** `web`, **Build** `npm run build`, **Output** `dist`.
+
+Full workshop loop (photo → deploy site → publish Move → create card → point env → rebuild): see the [root README](../README.md). Specs: [`../spec/`](../spec/README.md).

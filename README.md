@@ -2,7 +2,7 @@
 
 A workshop project that pairs a **Sui Move `BuilderCard` package** with a **read-only Vite/React site**.
 
-You publish and create your card with the **Sui CLI**, then set one object ID so the website can read on-chain profile data.
+You publish and create your card with the **Sui CLI**, then set one object ID so the website can read on-chain profile data over **Sui GraphQL**.
 
 There is **no browser wallet**, **no create form**, and **no on-page transaction signing**. Writes happen in the terminal only.
 
@@ -41,6 +41,7 @@ sui client publish --gas-budget 100000000
 cd web
 npm install
 npm run dev
+npm run lint
 npm run build
 npm run preview
 ```
@@ -49,8 +50,8 @@ npm run preview
 
 ## What you build
 
-1. **Move package** (`move/`) — `builder_card` module with a `BuilderCard` object and `create_builder_card`.
-2. **Static website** (`web/`) — single-viewport homepage that reads one on-chain object and shows your profile photo from `web/public/assets/profile.png`.
+1. **Move package** (`move/`) — `builder_card` module with an owned `BuilderCard`, Display metadata, and `create_builder_card` (builder number claimed from the shared Cryptita registry).
+2. **Static website** (`web/`) — single-viewport homepage that reads one on-chain object, shows your profile photo from `web/public/assets/profile.png`, and can export a Camera PNG or Spin the card.
 
 ### How data flows
 
@@ -69,7 +70,8 @@ npm run preview
 | Builder number | Auto-claimed from Cryptita Builder Registry |
 | Profile photo | Local file `web/public/assets/profile.png` |
 | Grey / green status dot | Grey = empty object ID; green = `VITE_PORTFOLIO_OBJECT_ID` has a value |
-| Suiscan link + explorer image | On-chain `website_url` and derived `photo_url` |
+| Suiscan link + explorer image | On-chain `website_url` and derived `photo_url` (`{website_url}/assets/profile.png`) |
+| Camera / Spin / share | Client-side PNG export, card orbit, Cryptita social links |
 | Header / footer / partners | Hardcoded workshop assets |
 
 ---
@@ -110,10 +112,9 @@ sui client new-env --alias mainnet --rpc https://fullnode.mainnet.sui.io:443
 ## Repository layout
 
 ```text
-move/                  Sui Move package (builder_card)
-web/                   Vite + React read-only frontend
-spec/                  Workshop specifications
-index.html, style.css  Card prototype references (do not delete)
+move/     Sui Move package (builder_card)
+web/      Vite + React read-only frontend
+spec/     Workshop specifications (aligned with this repo)
 ```
 
 ---
@@ -138,7 +139,7 @@ npm install
 Copy-Item .env.example .env
 ```
 
-Leave `VITE_PORTFOLIO_OBJECT_ID` empty for now.
+Leave `VITE_PORTFOLIO_OBJECT_ID` empty for now. `web/.env.example` ships `VITE_SUI_NETWORK=mainnet` (workshop production). For local practice, use Testnet:
 
 ```env
 VITE_PORTFOLIO_OBJECT_ID=
@@ -146,7 +147,7 @@ VITE_SUI_NETWORK=testnet
 VITE_CHAIN=sui
 ```
 
-For Mainnet production later, set `VITE_SUI_NETWORK=mainnet`.
+If `VITE_SUI_NETWORK` is omitted entirely, the app falls back to **testnet**. For Mainnet production later, set `VITE_SUI_NETWORK=mainnet` and recreate the object on Mainnet.
 
 ### Step 2 — Replace your profile photo
 
@@ -236,8 +237,11 @@ Pass the **shared registry object** first, then **12 strings** in this exact ord
 
 On create, the contract also stores:
 
+- `builder_no` — claimed automatically from the registry (`u64`)
 - `website_url` — shown as Suiscan / Display `link`
 - `photo_url` — derived as `{website_url}/assets/profile.png` for explorers
+
+Package `init` also creates **Display** metadata so Suiscan can show a human name, image, and site link.
 
 #### Bash / macOS / Git Bash
 
@@ -342,7 +346,7 @@ The website reads the **created BuilderCard object**, not the package.
 | Variable | Purpose |
 | -------- | ------- |
 | `VITE_PORTFOLIO_OBJECT_ID` | Created BuilderCard object ID. Empty = placeholder card + grey status dot |
-| `VITE_SUI_NETWORK` | `testnet` / `mainnet` / `devnet` — selects RPC/GraphQL and NETWORK label |
+| `VITE_SUI_NETWORK` | `testnet` / `mainnet` / `devnet` — selects GraphQL endpoint and NETWORK label |
 | `VITE_CHAIN` | Visual chain theme (default `sui`) |
 
 Vite inlines `VITE_*` at **build time**. After any `.env` change, rebuild and redeploy.
@@ -402,14 +406,17 @@ Vite inlines `VITE_*` at **build time**. After any `.env` change, rebuild and re
 
 ## Specifications
 
-Detailed requirements live in `spec/`:
+Detailed requirements live in [`spec/`](spec/README.md). They describe this repo as implemented:
 
-- `spec/04-sui-and-smart-contract-spec.md` — Move schema and CLI
-- `spec/05-frontend-implementation-spec.md` — React architecture
-- `spec/06-deployment-and-environment-spec.md` — deploy / env
+- `spec/01-project-spec.md` — product scope and locked decisions
+- `spec/02-architecture-spec.md` — repo shape and data flow
+- `spec/03-ui-ux-and-brand-spec.md` — layout, brand, Camera / Spin
+- `spec/04-sui-and-smart-contract-spec.md` — Move schema, registry, Display, CLI
+- `spec/05-frontend-implementation-spec.md` — React + GraphQL read path
+- `spec/06-deployment-and-environment-spec.md` — env and Vercel
 - `spec/07-testing-and-verification-spec.md` — verification checklist
-
-> Note: some older locked specs still describe a manual `builder_no` string and `photo_url` CLI arg. The **current code and this README** are authoritative: registry-assigned `builder_no`, local `profile.png`, and CLI `website_url`.
+- `spec/08-implementation-checklist.md` — living audit
+- `spec/09-photo-output-layout-capability.md` — Camera PNG contract
 
 ---
 
