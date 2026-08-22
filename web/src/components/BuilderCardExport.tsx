@@ -15,25 +15,6 @@ const BuilderCardExport = forwardRef<HTMLDivElement, BuilderCardExportProps>(
     const showPhoto = status !== 'error';
 
     const rootRef = useRef<HTMLDivElement | null>(null);
-    const prismReadyRef = useRef(false);
-    const raysReadyRef = useRef(false);
-
-    const checkBothReady = useCallback(() => {
-      if (prismReadyRef.current && raysReadyRef.current) {
-        const node = rootRef.current;
-        if (node) node.dataset.webglReady = 'true';
-      }
-    }, []);
-
-    const handlePrismReady = useCallback(() => {
-      prismReadyRef.current = true;
-      checkBothReady();
-    }, [checkBothReady]);
-
-    const handleRaysReady = useCallback(() => {
-      raysReadyRef.current = true;
-      checkBothReady();
-    }, [checkBothReady]);
 
     const setRefs = useCallback(
       (node: HTMLDivElement | null) => {
