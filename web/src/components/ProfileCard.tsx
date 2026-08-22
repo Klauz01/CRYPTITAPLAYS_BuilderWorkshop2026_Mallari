@@ -77,48 +77,48 @@ export default function ProfileCard({ portfolio, isOrbiting = false }: ProfileCa
   return (
     <div className="card-orbit" ref={orbitRef}>
       <div className="card-scale__inner">
-      <div
-        className={`profile-card${isFlipped ? ' is-flipped' : ''}${motionLocked ? ' is-orbiting' : ''}`}
-        onClick={handleCardClick}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        role="group"
-        aria-label="Builder profile card"
-      >
-        <button
-          type="button"
-          className="flip-btn"
-          disabled={motionLocked}
-          onClick={(event) => {
-            event.stopPropagation();
-            if (motionLocked) return;
-            setIsFlipped((current) => !current);
-          }}
-          onKeyDown={handleFlipKeyDown}
-          aria-pressed={isFlipped}
-          aria-label={isFlipped ? 'Show front of card' : 'Show back of card'}
+        <div
+          className={`profile-card${isFlipped ? ' is-flipped' : ''}${motionLocked ? ' is-orbiting' : ''}`}
+          onClick={handleCardClick}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          role="group"
+          aria-label="Builder profile card"
         >
-          <span className="flip-icon" aria-hidden="true">
-            ↻
-          </span>
-          Flip
-        </button>
+          <button
+            type="button"
+            className="flip-btn"
+            disabled={motionLocked}
+            onClick={(event) => {
+              event.stopPropagation();
+              if (motionLocked) return;
+              setIsFlipped((current) => !current);
+            }}
+            onKeyDown={handleFlipKeyDown}
+            aria-pressed={isFlipped}
+            aria-label={isFlipped ? 'Show front of card' : 'Show back of card'}
+          >
+            <span className="flip-icon" aria-hidden="true">
+              ↻
+            </span>
+            Flip
+          </button>
 
-        <CardFrontFace
-          portfolio={portfolio}
-          photoSrc={PROFILE_PHOTO_PATH}
-          showPhoto={showPhoto}
-          onPhotoError={() => setPhotoBroken(true)}
-          copiedField={copiedField}
-          onCopy={handleCopy}
-        />
+          <CardFrontFace
+            portfolio={portfolio}
+            photoSrc={PROFILE_PHOTO_PATH}
+            showPhoto={showPhoto}
+            onPhotoError={() => setPhotoBroken(true)}
+            copiedField={copiedField}
+            onCopy={handleCopy}
+          />
 
-        <CardBackFace
-          portfolio={portfolio}
-          backFaceTabIndex={backFaceTabIndex}
-          backFaceAriaHidden={!isFlipped}
-        />
-      </div>
+          <CardBackFace
+            portfolio={portfolio}
+            backFaceTabIndex={backFaceTabIndex}
+            backFaceAriaHidden={!isFlipped}
+          />
+        </div>
       </div>
     </div>
   );

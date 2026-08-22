@@ -1510,7 +1510,8 @@ opacity: 0.26;
   animation-play-state: paused;
 }
 
-.profile-card.is-flipped .back-logo-face {
+.profile-card.is-flipped .back-logo-face,
+.profile-card.is-orbiting .back-logo-face {
   animation-play-state: running;
 }
 

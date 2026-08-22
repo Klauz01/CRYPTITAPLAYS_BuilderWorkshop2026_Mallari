@@ -67,67 +67,76 @@ export default function SocialActions({
 
   return (
     <div className="social-actions">
-      <button
-        type="button"
-        className={`social-actions__link social-actions__camera${isGenerating ? ' is-generating' : ''}`}
-        aria-label={cameraLabel}
-        aria-busy={isGenerating}
-        disabled={cameraDisabled}
-        onClick={onCameraClick}
-      >
-        <CameraIcon />
-        <span className="social-actions__label">Camera</span>
-      </button>
-      <button
-        type="button"
-        className={`social-actions__link social-actions__spin${isOrbiting ? ' is-active' : ''}`}
-        aria-label={orbitLabel}
-        aria-pressed={isOrbiting}
-        onClick={onOrbitClick}
-      >
-        <SpinIcon />
-        <span className="social-actions__label">{isOrbiting ? 'Stop' : 'Spin'}</span>
-      </button>
-      <a
-        className="social-actions__link"
-        href="https://www.facebook.com/cryptitaplays"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Cryptita Plays on Facebook"
-      >
-        <BrandIcon icon={siFacebook} size={18} decorative />
-        <span className="social-actions__label">Facebook</span>
-      </a>
-      <a
-        className="social-actions__link"
-        href="https://x.com/cryptitaplays"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Cryptita Plays on X"
-      >
-        <BrandIcon icon={siX} size={18} decorative />
-        <span className="social-actions__label">X</span>
-      </a>
-      <a
-        className="social-actions__link"
-        href="https://www.linkedin.com/company/cryptitaplays/"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Cryptita Plays on LinkedIn"
-      >
-        <BrandIcon icon={siLinkedin} size={18} decorative />
-        <span className="social-actions__label">LinkedIn</span>
-      </a>
-      <a
-        className="social-actions__link"
-        href="https://www.instagram.com/cryptitaplays/"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Cryptita Plays on Instagram"
-      >
-        <BrandIcon icon={siInstagram} size={18} decorative />
-        <span className="social-actions__label">Instagram</span>
-      </a>
+      <div className="social-actions__tools">
+        <button
+          type="button"
+          className={`social-actions__link social-actions__camera${isGenerating ? ' is-generating' : ''}`}
+          aria-label={cameraLabel}
+          aria-busy={isGenerating}
+          disabled={cameraDisabled}
+          onClick={onCameraClick}
+        >
+          <CameraIcon />
+          <span className="social-actions__label">Camera</span>
+        </button>
+        <button
+          type="button"
+          className={`social-actions__link social-actions__spin${isOrbiting ? ' is-active' : ''}`}
+          aria-label={orbitLabel}
+          aria-pressed={isOrbiting}
+          onClick={onOrbitClick}
+        >
+          <SpinIcon />
+          <span className="social-actions__label">{isOrbiting ? 'Stop' : 'Spin'}</span>
+        </button>
+      </div>
+      <section className="social-actions__share" aria-labelledby="share-your-build-heading">
+        <h2 id="share-your-build-heading" className="social-actions__share-title">
+          Share Your Build
+        </h2>
+        <div className="social-actions__share-links">
+          <a
+            className="social-actions__link"
+            href="https://www.facebook.com/cryptitaplays"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Cryptita Plays on Facebook"
+          >
+            <BrandIcon icon={siFacebook} size={18} decorative />
+            <span className="social-actions__label">Facebook</span>
+          </a>
+          <a
+            className="social-actions__link"
+            href="https://x.com/cryptitaplays"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Cryptita Plays on X"
+          >
+            <BrandIcon icon={siX} size={18} decorative />
+            <span className="social-actions__label">X</span>
+          </a>
+          <a
+            className="social-actions__link"
+            href="https://www.linkedin.com/company/cryptitaplays/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Cryptita Plays on LinkedIn"
+          >
+            <BrandIcon icon={siLinkedin} size={18} decorative />
+            <span className="social-actions__label">LinkedIn</span>
+          </a>
+          <a
+            className="social-actions__link"
+            href="https://www.instagram.com/cryptitaplays/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Cryptita Plays on Instagram"
+          >
+            <BrandIcon icon={siInstagram} size={18} decorative />
+            <span className="social-actions__label">Instagram</span>
+          </a>
+        </div>
+      </section>
     </div>
   );
 }

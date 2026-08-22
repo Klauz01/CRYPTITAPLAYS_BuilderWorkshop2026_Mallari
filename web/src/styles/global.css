@@ -209,7 +209,37 @@ button {
   align-items: stretch;
   flex-shrink: 0;
   width: 188px;
+  gap: 20px;
+}
+
+.social-actions__tools {
+  display: flex;
+  flex-direction: column;
   gap: 12px;
+}
+
+.social-actions__share {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.social-actions__share-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.social-actions__share-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .social-actions__link {
@@ -225,6 +255,7 @@ button {
   color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
   background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
   transition:
     border-color 160ms ease,
     background 160ms ease,
