@@ -10,7 +10,6 @@ Publish a Sui Move `BuilderCard` · Read it from a Vite/React site · Deploy on 
   <tr>
     <td align="center" bgcolor="#111318">
       <br />
-      <p><strong>Powered by</strong></p>
       <p><strong>Educational partners</strong></p>
       <table align="center">
         <tr>
