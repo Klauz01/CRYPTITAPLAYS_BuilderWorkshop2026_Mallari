@@ -11,15 +11,6 @@ Publish a Sui Move `BuilderCard` · Read it from a Vite/React site · Deploy on 
     <td align="center" bgcolor="#111318">
       <br />
       <p><strong>Powered by</strong></p>
-      <table align="center">
-        <tr>
-          <td align="center" valign="middle">
-            <a href="https://www.sui.io/">
-              <img src="web/public/assets/icon/sui-logo.svg" alt="Sui" height="40" />
-            </a>
-          </td>
-        </tr>
-      </table>
       <p><strong>Educational partners</strong></p>
       <table align="center">
         <tr>
