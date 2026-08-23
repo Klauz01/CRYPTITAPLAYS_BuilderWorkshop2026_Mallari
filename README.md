@@ -9,43 +9,54 @@ Publish a Sui Move `BuilderCard` · Read it from a Vite/React site · Deploy on 
 <table align="center">
   <tr>
     <td align="center" bgcolor="#111318">
-      <table align="center">
-      <p><sub><strong>Educational partners</strong></sub></p>
+      <br />
+      <p><strong>Powered by</strong></p>
       <table align="center">
         <tr>
           <td align="center" valign="middle">
-            <img src="web/public/assets/icon/B4Her%20Logo.svg" alt="B4Her" height="12" />
-          </td>
-          <td align="center" valign="middle">
-            <img src="web/public/assets/icon/b4y%20Logo.svg" alt="B4Y" height="12" />
+            <a href="https://www.sui.io/">
+              <img src="web/public/assets/icon/sui-logo.svg" alt="Sui" height="40" />
+            </a>
           </td>
         </tr>
       </table>
-      <p><sub><strong>Community partners</strong></sub></p>
+      <p><strong>Educational partners</strong></p>
+      <table align="center">
+        <tr>
+          <td align="center" valign="middle">
+            <img src="web/public/assets/icon/B4Her%20Logo.svg" alt="B4Her" height="28" />
+          </td>
+          <td align="center" valign="middle">
+            <img src="web/public/assets/icon/b4y%20Logo.svg" alt="B4Y" height="28" />
+          </td>
+        </tr>
+      </table>
+      <p><strong>Community partners</strong></p>
       <table align="center">
         <tr>
           <td align="center" valign="middle">
             <a href="https://www.facebook.com/awssbg">
-              <img src="web/public/assets/icon/aws-uphsl.svg" alt="AWS UPHSL" height="2" />
+              <img src="web/public/assets/icon/aws-uphsl.svg" alt="AWS UPHSL" height="32" />
             </a>
           </td>
           <td align="center" valign="middle">
             <a href="https://www.facebook.com/DEVCONLAGUNA">
-              <img src="web/public/assets/icon/devcon-laguna.svg" alt="DEVCON Laguna" height="12" />
+              <img src="web/public/assets/icon/devcon-laguna.svg" alt="DEVCON Laguna" height="32" />
             </a>
           </td>
           <td align="center" valign="middle">
             <a href="https://www.facebook.com/grantix.global">
-              <img src="web/public/assets/icon/grantix.svg" alt="grantix" height="12" />
+              <img src="web/public/assets/icon/grantix.svg" alt="grantix" height="32" />
             </a>
           </td>
           <td align="center" valign="middle">
             <a href="https://www.facebook.com/kamiyonstudio">
-              <img src="web/public/assets/icon/kamiyon.svg" alt="Kamiyon Studio" height="12" />
+              <img src="web/public/assets/icon/kamiyon.svg" alt="Kamiyon Studio" height="32" />
             </a>
           </td>
         </tr>
       </table>
+      <br />
     </td>
   </tr>
 </table>
