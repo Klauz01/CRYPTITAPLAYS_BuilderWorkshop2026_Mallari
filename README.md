@@ -6,6 +6,50 @@
 
 Publish a Sui Move `BuilderCard` · Read it from a Vite/React site · Deploy on Mainnet
 
+<table align="center">
+  <tr>
+    <td align="center" bgcolor="#111318">
+      <table align="center">
+      <p><sub><strong>Educational partners</strong></sub></p>
+      <table align="center">
+        <tr>
+          <td align="center" valign="middle">
+            <img src="web/public/assets/icon/B4Her%20Logo.svg" alt="B4Her" height="12" />
+          </td>
+          <td align="center" valign="middle">
+            <img src="web/public/assets/icon/b4y%20Logo.svg" alt="B4Y" height="12" />
+          </td>
+        </tr>
+      </table>
+      <p><sub><strong>Community partners</strong></sub></p>
+      <table align="center">
+        <tr>
+          <td align="center" valign="middle">
+            <a href="https://www.facebook.com/awssbg">
+              <img src="web/public/assets/icon/aws-uphsl.svg" alt="AWS UPHSL" height="2" />
+            </a>
+          </td>
+          <td align="center" valign="middle">
+            <a href="https://www.facebook.com/DEVCONLAGUNA">
+              <img src="web/public/assets/icon/devcon-laguna.svg" alt="DEVCON Laguna" height="12" />
+            </a>
+          </td>
+          <td align="center" valign="middle">
+            <a href="https://www.facebook.com/grantix.global">
+              <img src="web/public/assets/icon/grantix.svg" alt="grantix" height="12" />
+            </a>
+          </td>
+          <td align="center" valign="middle">
+            <a href="https://www.facebook.com/kamiyonstudio">
+              <img src="web/public/assets/icon/kamiyon.svg" alt="Kamiyon Studio" height="12" />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
 ---
 
 Ready to move from learning Web3 concepts to actually building and deploying on-chain? This repo is your workshop companion: you'll set up a development environment, publish a smart contract, connect a website to on-chain data, and deploy your application.
